@@ -1,26 +1,242 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #080808;
+  --foreground: #f0ece4;
+  --card: #0f0f0f;
+  --card-foreground: #f0ece4;
+  --popover: #0f0f0f;
+  --popover-foreground: #f0ece4;
+  --primary: #f0ece4;
+  --primary-foreground: #080808;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #f0ece4;
+  --muted: #1a1a1a;
+  --muted-foreground: #666660;
+  --accent: #c8a882;
+  --accent-foreground: #080808;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #1f1f1f;
+  --input: #1a1a1a;
+  --ring: #c8a882;
+  --radius: 0.625rem;
+  --sidebar: #0f0f0f;
+  --sidebar-foreground: #f0ece4;
+  --sidebar-primary: #f0ece4;
+  --sidebar-primary-foreground: #080808;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #f0ece4;
+  --sidebar-border: #1f1f1f;
+  --sidebar-ring: #c8a882;
+
+  /* Custom Design Tokens */
+  --gold: #c8a882;
+  --gold-dim: #9a7e60;
+  --cream: #f0ece4;
+  --ink: #080808;
+  --charcoal: #1a1a1a;
+  --ash: #2a2a2a;
+  --dust: #666660;
+  --smoke: #3a3a3a;
+}
+
+/* Reset and Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Hide default cursor on desktop */
+@media (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+/* Selection */
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+}
+
+/* Typography Scale */
+.text-display {
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+}
+
+.text-hero {
+  font-size: clamp(2.5rem, 7vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+
+.text-title {
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+
+.text-subtitle {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+.text-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Noise Texture Overlay */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Gradient utilities */
+.gradient-gold {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-glow {
+  background: radial-gradient(ellipse at center, rgba(200, 168, 130, 0.15) 0%, transparent 70%);
+}
+
+/* Line decorators */
+.line-h {
+  height: 1px;
+  background: var(--border);
+}
+
+/* Hover line animation */
+.hover-line {
+  position: relative;
+}
+.hover-line::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.hover-line:hover::after {
+  width: 100%;
+}
+
+/* Spotlight (aceternity) */
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+.animate-spotlight {
+  animation: spotlight 2s ease 0.75s 1 forwards;
+}
+
+/* Blur glass panel */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
