@@ -57,7 +57,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-[300vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[300vh] pt-40 pb-0 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -69,10 +69,7 @@ export const HeroParallax = ({
         }}
         className=""
       >
-        <motion.div
-          className="flex flex-row-reverse"
-          style={{ gap: "8rem", marginBottom: "8rem", paddingInline: "4rem" }}
-        >
+        <motion.div className="flex flex-row-reverse mb-16 gap-15">
           {firstRow.map((product) => (
             <ProductCard
               product={product}
@@ -81,10 +78,7 @@ export const HeroParallax = ({
             />
           ))}
         </motion.div>
-        <motion.div
-          className="flex flex-row"
-          style={{ gap: "8rem", marginBottom: "8rem", paddingInline: "4rem" }}
-        >
+        <motion.div className="flex flex-row mb-16 gap-15">
           {secondRow.map((product) => (
             <ProductCard
               product={product}
@@ -93,10 +87,7 @@ export const HeroParallax = ({
             />
           ))}
         </motion.div>
-        <motion.div
-          className="flex flex-row-reverse"
-          style={{ gap: "8rem", paddingInline: "4rem" }}
-        >
+        <motion.div className="flex flex-row-reverse gap-15">
           {thirdRow.map((product) => (
             <ProductCard
               product={product}
@@ -112,7 +103,10 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
+    <div
+      className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0"
+      style={{ paddingTop: "25vh", paddingLeft: "15vh" }}
+    >
       <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
         The Ultimate <br /> development studio
       </h1>
@@ -145,22 +139,21 @@ export const ProductCard = ({
         y: -20,
       }}
       key={product.title}
-      className="group/product relative shrink-0"
-      style={{ height: "22rem", width: "26rem" }}
+      className="group/product h-96 w-[30rem] relative flex-shrink-0 overflow-hidden rounded-3xl"
     >
       <Link
         href={product.link}
-        className="block group-hover/product:shadow-2xl "
+        className="block group-hover/product:shadow-2xl rounded-3xl overflow-hidden"
       >
         <Image
           src={product.thumbnail}
           height="600"
           width="600"
-          className="object-cover object-left-top absolute h-full w-full inset-0"
+          className="object-cover object-left-top absolute h-full w-full inset-0 rounded-3xl"
           alt={product.title}
         />
       </Link>
-      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
+      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none rounded-3xl"></div>
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
         {product.title}
       </h2>

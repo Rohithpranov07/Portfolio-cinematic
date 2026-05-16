@@ -69,6 +69,10 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
         },
       });
 
+      // Phase 1 (0 → 0.55): hold still — let the spline robot play its entrance
+      tl.to({}, { duration: 0.55 }, 0);
+
+      // Phase 2 (0.55 → 1.0): curtain transition out to next page
       tl.to(
         beneathRef.current,
         {
@@ -76,8 +80,9 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
           scale: 0.78,
           z: -240,
           filter: "brightness(0.4) blur(2px)",
+          duration: 0.45,
         },
-        0
+        0.55
       );
 
       tl.to(
@@ -85,18 +90,18 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
         {
           yPercent: 0,
           clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-          duration: 0.5,
+          duration: 0.22,
         },
-        0.05
+        0.575
       );
 
       tl.to(
         curtainRef.current,
         {
           clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-          duration: 0.7,
+          duration: 0.32,
         },
-        0.25
+        0.67
       );
 
       tl.fromTo(
@@ -104,21 +109,21 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
         { clipPath: "polygon(100% 0, 100% 0, 0 100%, 0 100%)" },
         {
           clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-          duration: 0.6,
+          duration: 0.28,
         },
-        0.25
+        0.67
       );
 
       tl.to(
         labelRef.current,
-        { opacity: 1, y: 0, scale: 1, duration: 0.4 },
-        0.5
+        { opacity: 1, y: 0, scale: 1, duration: 0.18 },
+        0.78
       );
 
       tl.to(
         shardRef.current,
-        { opacity: 0, duration: 0.2 },
-        0.85
+        { opacity: 0, duration: 0.1 },
+        0.93
       );
     }, sectionRef);
 
@@ -129,7 +134,7 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "320vh" }}
+      style={{ height: "460vh" }}
       aria-label="Scroll transition"
     >
       <div

@@ -38,7 +38,7 @@ export const FrameToFullscreen: React.FC<Props> = ({ titleComponent, children })
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=260%",
+          end: "+=420%",
           scrub: 1.2,
           pin: stageRef.current,
           pinSpacing: true,
@@ -46,26 +46,33 @@ export const FrameToFullscreen: React.FC<Props> = ({ titleComponent, children })
         },
       });
 
-      // Phase 1 (0 → 0.5): "Goes here" reveals; frame eases up & untilts slightly
+      // Phase 1 (0 → 0.3): "Goes here" reveals; frame eases up & untilts slightly
       tl.to(
         frameRef.current,
         {
           rotateX: 15,
           scale: 0.93,
           y: 20,
-          duration: 0.5,
+          duration: 0.3,
           ease: "power1.out",
         },
         0
       );
 
-      // Phase 2 (0.5 → 1): title fades out, frame fully flattens to fullscreen
+      // Phase 2 (0.3 → 0.45): title fades out smoothly (completes before frame rises)
       tl.to(
         titleRef.current,
-        { y: -160, opacity: 0, duration: 0.5, ease: "power2.in" },
-        0.5
+        {
+          y: -60,
+          opacity: 0,
+          filter: "blur(6px)",
+          duration: 0.15,
+          ease: "sine.inOut",
+        },
+        0.3
       );
 
+      // Phase 3 (0.45 → 0.6): frame flattens up to fullscreen
       tl.to(
         frameRef.current,
         {
@@ -77,17 +84,20 @@ export const FrameToFullscreen: React.FC<Props> = ({ titleComponent, children })
           borderRadius: 0,
           borderWidth: 0,
           padding: 0,
-          duration: 0.5,
+          duration: 0.15,
           ease: "power3.inOut",
         },
-        0.5
+        0.45
       );
 
       tl.to(
         innerRef.current,
-        { borderRadius: 0, duration: 0.5, ease: "power3.inOut" },
-        0.5
+        { borderRadius: 0, duration: 0.15, ease: "power3.inOut" },
+        0.45
       );
+
+      // Phase 4 (0.6 → 1.0): hold fullscreen still — extends scroll without further motion
+      tl.to({}, { duration: 0.4 }, 0.6);
     }, sectionRef);
 
     return () => ctx.revert();
@@ -98,7 +108,7 @@ export const FrameToFullscreen: React.FC<Props> = ({ titleComponent, children })
       <section
         ref={sectionRef}
         className="relative w-full"
-        style={{ height: "360vh" }}
+        style={{ height: "520vh" }}
       >
         <div
           ref={stageRef}

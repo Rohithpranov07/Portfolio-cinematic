@@ -1,12 +1,13 @@
 import FrameToFullscreen from "@/components/animations/FrameToFullscreen";
 import ScrollFloat from "@/components/animations/ScrollFloat";
-import ScrollRevealCurtain from "@/components/animations/ScrollRevealCurtain";
+import { ScrollRevealCurtain } from "@/components/animations/ScrollRevealCurtain";
 import ScrollWarpPortal from "@/components/animations/ScrollWarpPortal";
 import ScrollFoldTransition from "@/components/animations/ScrollFoldTransition";
 import VSCodePortfolio from "@/components/ui/vscode-portfolio";
 import { SplineSceneBasic } from "@/components/ui/spline-scene-basic";
 import StoryScrollDemo from "@/components/ui/story-scroll-demo";
 import HeroParallaxDemo from "@/components/ui/hero-parallax-demo";
+import ScrollMorphSection from "@/components/ui/scroll-morph-section";
 import ScrollTiltedGridDemo from "@/components/ui/scroll-tilted-grid-demo";
 import CardCarouselDemo from "@/components/ui/card-carousel-demo";
 import ZoomParallaxDemo from "@/components/ui/zoom-parallax-demo";
@@ -32,7 +33,7 @@ export default function Home() {
 
       <ScrollRevealCurtain
         curtainColor="#fd5200"
-        scrollDistance="+=240%"
+        scrollDistance="+=360%"
         label={
           <div className="flex flex-col items-center gap-4">
             <span className="text-xs font-bold uppercase tracking-[0.3em] opacity-80">
@@ -73,6 +74,8 @@ export default function Home() {
       />
 
       <HeroParallaxDemo />
+
+      <ScrollMorphSection />
 
       <ScrollFoldTransition
         seamColor="#c8a882"
