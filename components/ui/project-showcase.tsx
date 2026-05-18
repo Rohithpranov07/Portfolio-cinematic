@@ -105,7 +105,7 @@ export function ProjectShowcase() {
       className="relative w-full mx-auto px-8 py-24 flex flex-col items-center justify-center"
     >
       <h2 className="text-muted-foreground text-sm font-medium tracking-[0.3em] uppercase mb-16 text-center">
-        Selected Work
+        Flagship Projects
       </h2>
 
       <div

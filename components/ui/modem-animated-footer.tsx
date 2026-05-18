@@ -46,42 +46,85 @@ export const Footer = ({
                 <span className="text-foreground text-4xl md:text-5xl font-bold tracking-tight">
                   {brandName}
                 </span>
-                <p className="text-muted-foreground font-medium text-center w-full max-w-md text-base leading-loose">
+                <p
+                  className="text-muted-foreground font-medium text-center text-base leading-loose"
+                  style={{ whiteSpace: "nowrap", marginBottom: "32px" }}
+                >
                   {brandDescription}
                 </p>
               </div>
 
-              {socialLinks.length > 0 && (
-                <div className="flex mt-14 gap-8">
+              {socialLinks.length > 0 && socialLinks.length === navLinks.length ? (
+                <div
+                  className="mt-14 grid"
+                  style={{
+                    gridTemplateColumns: `repeat(${socialLinks.length}, minmax(0, 1fr))`,
+                    columnGap: "56px",
+                    rowGap: "16px",
+                    justifyItems: "center",
+                  }}
+                >
                   {socialLinks.map((link, index) => (
                     <Link
-                      key={index}
+                      key={`s-${index}`}
                       href={link.href}
-                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-muted-foreground hover:text-foreground transition-colors flex justify-center"
                       target="_blank"
                       rel="noopener noreferrer"
+                      style={{ gridRow: 1, gridColumn: index + 1 }}
                     >
-                      <div className="w-6 h-6 hover:scale-110 duration-300">
+                      <div className="w-6 h-6 hover:scale-110 duration-300 flex items-center justify-center">
                         {link.icon}
                       </div>
                       <span className="sr-only">{link.label}</span>
                     </Link>
                   ))}
-                </div>
-              )}
-
-              {navLinks.length > 0 && (
-                <div className="flex flex-wrap justify-center gap-10 mt-14 text-base font-medium text-muted-foreground max-w-full px-4">
                   {navLinks.map((link, index) => (
                     <Link
-                      key={index}
-                      className="hover:text-foreground duration-300 hover:font-semibold"
+                      key={`n-${index}`}
+                      className="hover:text-foreground duration-300 hover:font-semibold text-base font-medium text-muted-foreground text-center"
                       href={link.href}
+                      style={{ gridRow: 2, gridColumn: index + 1 }}
                     >
                       {link.label}
                     </Link>
                   ))}
                 </div>
+              ) : (
+                <>
+                  {socialLinks.length > 0 && (
+                    <div className="flex mt-14 gap-8">
+                      {socialLinks.map((link, index) => (
+                        <Link
+                          key={index}
+                          href={link.href}
+                          className="text-muted-foreground hover:text-foreground transition-colors"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <div className="w-6 h-6 hover:scale-110 duration-300">
+                            {link.icon}
+                          </div>
+                          <span className="sr-only">{link.label}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  {navLinks.length > 0 && (
+                    <div className="flex flex-wrap justify-center gap-10 mt-14 text-base font-medium text-muted-foreground max-w-full px-4">
+                      {navLinks.map((link, index) => (
+                        <Link
+                          key={index}
+                          className="hover:text-foreground duration-300 hover:font-semibold"
+                          href={link.href}
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>

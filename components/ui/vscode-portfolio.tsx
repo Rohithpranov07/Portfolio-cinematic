@@ -223,6 +223,76 @@ const TechIcon = ({ kind }: { kind: string }) => {
         <div className="w-7 h-7 rounded-[5px] bg-[#5cb85c] text-white font-bold flex items-center justify-center text-[10px]">JS</div>
       </div>
     );
+  if (kind === "aws")
+    return (
+      <div className={base}>
+        <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none">
+          <path d="M6.7 11.2c0 .3 0 .55.08.74.1.2.22.4.38.62a.38.38 0 0 1 .06.2c0 .08-.05.17-.16.26l-.54.36a.4.4 0 0 1-.22.07c-.08 0-.17-.04-.25-.12a2.6 2.6 0 0 1-.3-.4 6.4 6.4 0 0 1-.26-.5c-.67.79-1.5 1.18-2.5 1.18-.7 0-1.27-.2-1.7-.6-.41-.4-.62-.94-.62-1.6 0-.71.25-1.29.76-1.72.5-.43 1.19-.65 2.05-.65.28 0 .58.03.89.07.3.04.62.1.95.18v-.6c0-.64-.13-1.08-.4-1.34-.27-.26-.73-.39-1.38-.39-.3 0-.6.04-.92.11-.31.07-.62.16-.92.27a2.45 2.45 0 0 1-.3.11.52.52 0 0 1-.13.02c-.12 0-.18-.08-.18-.26v-.41c0-.14.02-.24.06-.3.04-.06.12-.12.24-.18.3-.15.65-.28 1.07-.38.42-.1.86-.16 1.33-.16 1.01 0 1.75.23 2.23.69.47.45.71 1.15.71 2.08v2.75ZM3.27 12.5c.28 0 .57-.05.87-.15.3-.1.57-.28.8-.53.13-.16.23-.34.28-.55.04-.2.07-.45.07-.74v-.36a7 7 0 0 0-.76-.14 6.3 6.3 0 0 0-.78-.05c-.55 0-.96.11-1.23.33-.27.22-.4.54-.4.95 0 .39.1.68.3.88.2.2.49.36.85.36Zm6.79.93a.46.46 0 0 1-.32-.08c-.07-.07-.14-.21-.2-.4l-2.2-7.24a1.8 1.8 0 0 1-.1-.41c0-.16.08-.25.25-.25h.86c.15 0 .26.03.32.08.07.07.13.21.19.4l1.57 6.2 1.46-6.2c.05-.2.11-.33.18-.4a.6.6 0 0 1 .33-.08h.7c.16 0 .27.03.34.08.06.07.13.21.17.4l1.48 6.28 1.62-6.28c.06-.2.13-.33.19-.4a.55.55 0 0 1 .32-.08h.81c.17 0 .26.09.26.25 0 .05-.01.1-.02.16a1.4 1.4 0 0 1-.08.25l-2.25 7.24c-.06.2-.13.32-.2.4a.6.6 0 0 1-.32.07h-.75c-.15 0-.26-.02-.33-.08-.07-.07-.13-.2-.17-.4l-1.45-6.05-1.44 6.04c-.04.2-.1.34-.17.41-.07.06-.19.08-.33.08h-.75ZM20.95 13.61c-.44 0-.88-.05-1.3-.15-.42-.1-.75-.21-.97-.34-.13-.07-.22-.15-.26-.23a.6.6 0 0 1-.05-.24v-.43c0-.18.06-.26.2-.26.05 0 .1.01.16.03.06.02.14.06.23.1.3.13.62.23.96.3.35.07.69.11 1.04.11.55 0 .98-.1 1.27-.29.3-.19.45-.47.45-.83 0-.24-.08-.45-.23-.62-.16-.16-.46-.32-.88-.46l-1.27-.4c-.64-.2-1.11-.5-1.4-.9a2.1 2.1 0 0 1-.45-1.27c0-.36.08-.69.23-.97.16-.28.37-.52.63-.71.27-.2.57-.35.92-.45.36-.1.73-.15 1.12-.15.19 0 .39.02.58.04.2.04.39.07.57.12.18.05.34.1.5.16.16.06.28.13.36.19.12.07.2.14.25.22.04.07.07.16.07.28v.4c0 .19-.07.28-.2.28a.92.92 0 0 1-.34-.1 4.1 4.1 0 0 0-1.73-.36c-.5 0-.89.08-1.16.25-.27.16-.41.42-.41.76 0 .24.1.45.27.62.18.16.5.33.96.48l1.24.4c.64.2 1.09.49 1.36.86.27.36.4.78.4 1.25 0 .37-.07.7-.22.99-.16.3-.37.55-.64.75-.28.21-.61.36-.99.47-.4.12-.81.18-1.26.18ZM21.95 17.5c-2.71 2-6.65 3.07-10.04 3.07-4.74 0-9.02-1.75-12.25-4.66-.26-.23-.03-.55.27-.37 3.5 2.03 7.81 3.26 12.27 3.26 3.02 0 6.32-.63 9.37-1.92.46-.2.85.3.38.62Z" fill="#ff9900"/>
+          <path d="M23.08 16.27c-.35-.45-2.3-.22-3.18-.1-.27.03-.31-.2-.07-.37 1.56-1.1 4.12-.78 4.42-.41.3.38-.08 2.94-1.55 4.16-.22.19-.43.09-.34-.16.32-.83 1.03-2.68.72-3.12Z" fill="#ff9900"/>
+        </svg>
+      </div>
+    );
+  if (kind === "tf")
+    return (
+      <div className={base}>
+        <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none">
+          <path d="M11 2 2 7v10l4 2v-9l5-3v15l4 2V8l5 3V7l-9-5Z" fill="#ff6f00"/>
+          <path d="M11 2v17l4 2V8l5 3V7l-9-5Z" fill="#ffa726"/>
+        </svg>
+      </div>
+    );
+  if (kind === "hf")
+    return (
+      <div className={base}>
+        <div className="w-7 h-7 rounded-full bg-[#ffd21e] flex items-center justify-center text-[14px]">🤗</div>
+      </div>
+    );
+  if (kind === "lg")
+    return (
+      <div className={base}>
+        <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none">
+          <circle cx="6" cy="6" r="2.4" stroke="#a78bfa" strokeWidth="1.3" fill="#1a1330"/>
+          <circle cx="18" cy="6" r="2.4" stroke="#f0abfc" strokeWidth="1.3" fill="#1a1330"/>
+          <circle cx="12" cy="18" r="2.4" stroke="#c4b5fd" strokeWidth="1.3" fill="#1a1330"/>
+          <path d="M6 8.4v3a2 2 0 0 0 2 2h8a2 2 0 0 1 2 2v0M6 8.4a2 2 0 0 0 2 2h2.5M18 8.4a2 2 0 0 1-2 2h-2.5M10.5 10.4l1.5 5M13.5 10.4 12 15.4" stroke="#c4b5fd" strokeWidth="1.1" strokeLinecap="round"/>
+        </svg>
+      </div>
+    );
+  if (kind === "claude")
+    return (
+      <div className={base}>
+        <svg viewBox="0 -0.01 39.5 39.53" className="w-7 h-7" fill="none">
+          <path d="m7.75 26.27 7.77-4.36.13-.38-.13-.21h-.38l-1.3-.08-4.44-.12-3.85-.16-3.73-.2-.94-.2-.88-1.16.09-.58.79-.53 1.13.1 2.5.17 3.75.26 2.72.16 4.03.42h.64l.09-.26-.22-.16-.17-.16-3.88-2.63-4.2-2.78-2.2-1.6-1.19-.81-.6-.76-.26-1.66 1.08-1.19 1.45.1.37.1 1.47 1.13 3.14 2.43 4.1 3.02.6.5.24-.17.03-.12-.27-.45-2.23-4.03-2.38-4.1-1.06-1.7-.28-1.02c-.1-.42-.17-.77-.17-1.2l1.23-1.67.68-.22 1.64.22.69.6 1.02 2.33 1.65 3.67 2.56 4.99.75 1.48.4 1.37.15.42h.26v-.24l.21-2.81.39-3.45.38-4.44.13-1.25.62-1.5 1.23-.81.96.46.79 1.13-.11.73-.47 3.05-.92 4.78-.6 3.2h.35l.4-.4 1.62-2.15 2.72-3.4 1.2-1.35 1.4-1.49.9-.71h1.7l1.25 1.86-.56 1.92-1.75 2.22-1.45 1.88-2.08 2.8-1.3 2.24.12.18.31-.03 4.7-1 2.54-.46 3.03-.52 1.37.64.15.65-.54 1.33-3.24.8-3.8.76-5.66 1.34-.07.05.08.1 2.55.24 1.09.06h2.67l4.97.37 1.3.86.78 1.05-.13.8-2 1.02-2.7-.64-6.3-1.5-2.16-.54h-.3v.18l1.8 1.76 3.3 2.98 4.13 3.84.21.95-.53.75-.56-.08-3.63-2.73-1.4-1.23-3.17-2.67h-.21v.28l.73 1.07 3.86 5.8.2 1.78-.28.58-1 .35-1.1-.2-2.26-3.17-2.33-3.57-1.88-3.2-.23.13-1.11 11.95-.52.61-1.2.46-1-.76-.53-1.23.53-2.43.64-3.17.52-2.52.47-3.13.28-1.04-.02-.07-.23.03-2.36 3.24-3.59 4.85-2.84 3.04-.68.27-1.18-.61.11-1.09.66-.97 3.93-5 2.37-3.1 1.53-1.79-.01-.26h-.09l-10.44 6.78-1.86.24-.8-.75.1-1.23.38-.4 3.14-2.16z" fill="#d97757"/>
+        </svg>
+      </div>
+    );
+  if (kind === "flutter")
+    return (
+      <div className={base}>
+        <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none">
+          <path d="M14.3 2 4 12.3l3.2 3.2L20.7 2h-6.4Z" fill="#42a5f5"/>
+          <path d="M14.3 13.4 9.2 18.5l3.2 3.2 5.1-5.1-3.2-3.2Z" fill="#0d47a1"/>
+          <path d="M9.2 18.5 12.4 21.7h6.4L12.4 15.3 9.2 18.5Z" fill="#42a5f5"/>
+          <path d="m12.4 15.3 3.2 3.2-1.3 1.3-3.2-3.2 1.3-1.3Z" fill="#1976d2"/>
+        </svg>
+      </div>
+    );
+  if (kind === "github")
+    return (
+      <div className={base}>
+        <svg viewBox="0 0 24 24" className="w-7 h-7" fill="#f0f6fc">
+          <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/>
+        </svg>
+      </div>
+    );
+  if (kind === "docker")
+    return (
+      <div className={base}>
+        <svg viewBox="0 0 24 24" className="w-7 h-7" fill="#2496ed">
+          <path d="M22.5 9.4c-.06-.05-.6-.46-1.74-.46-.3 0-.6.03-.9.08-.22-1.51-1.47-2.24-1.53-2.27l-.3-.18-.2.28c-.26.4-.45.86-.55 1.34-.2.86-.08 1.66.34 2.34-.5.28-1.32.35-1.5.36H1.6a.6.6 0 0 0-.6.6 8.96 8.96 0 0 0 .56 3.26c.42 1.1 1.04 1.9 1.86 2.39 1.85 1.1 4.04 1.34 5.84 1.34.81 0 1.6-.07 2.32-.2 1-.18 1.96-.5 2.83-.96a8.05 8.05 0 0 0 1.97-1.55c1.07-1.2 1.7-2.53 2.16-3.72.06.01.13.01.2.01 1.21 0 1.95-.49 2.36-.89.27-.26.49-.58.63-.95l.09-.27-.21-.16ZM2.85 10h2.04c.1 0 .18-.08.18-.18V8a.18.18 0 0 0-.18-.18H2.85a.18.18 0 0 0-.18.18v1.82c0 .1.08.18.18.18Zm2.81 0H7.7c.1 0 .18-.08.18-.18V8a.18.18 0 0 0-.18-.18H5.66a.18.18 0 0 0-.18.18v1.82c0 .1.08.18.18.18Zm2.85 0h2.04c.1 0 .18-.08.18-.18V8a.18.18 0 0 0-.18-.18H8.51a.18.18 0 0 0-.18.18v1.82c0 .1.08.18.18.18Zm2.81 0h2.04c.1 0 .18-.08.18-.18V8a.18.18 0 0 0-.18-.18h-2.04a.18.18 0 0 0-.18.18v1.82c0 .1.08.18.18.18Zm-5.66-2.6H7.7c.1 0 .18-.08.18-.18V5.4a.18.18 0 0 0-.18-.18H5.66a.18.18 0 0 0-.18.18v1.82c0 .1.08.18.18.18Zm2.85 0h2.04c.1 0 .18-.08.18-.18V5.4a.18.18 0 0 0-.18-.18H8.51a.18.18 0 0 0-.18.18v1.82c0 .1.08.18.18.18Zm2.81 0h2.04c.1 0 .18-.08.18-.18V5.4a.18.18 0 0 0-.18-.18h-2.04a.18.18 0 0 0-.18.18v1.82c0 .1.08.18.18.18Zm0-2.6h2.04c.1 0 .18-.08.18-.18V2.8a.18.18 0 0 0-.18-.18h-2.04a.18.18 0 0 0-.18.18v1.82c0 .1.08.18.18.18Zm2.83 5.2h2.04c.1 0 .18-.08.18-.18V8a.18.18 0 0 0-.18-.18h-2.04a.18.18 0 0 0-.18.18v1.82c0 .1.08.18.18.18Z"/>
+        </svg>
+      </div>
+    );
   return null;
 };
 
@@ -333,7 +403,7 @@ export const VSCodePortfolio: React.FC = () => {
               <h1 className="text-[104px] leading-[1.05] font-bold tracking-tight" style={{ marginBottom: "16px", marginLeft: "24px" }}>
                 <TextType
                   as="span"
-                  text="Yash Sharma"
+                  text="Rohith Pranov"
                   loop={false}
                   typingSpeed={160}
                   initialDelay={500}
@@ -374,18 +444,18 @@ export const VSCodePortfolio: React.FC = () => {
 
               {/* Code block — Safari-framed */}
               <Safari_01
-                url="yashsharma.dev/developer.ts"
+                url="rohithpranov.dev/developer.ts"
                 className="mb-12 max-w-[820px]"
                 style={{ marginLeft: "24px", marginRight: "24px", marginBottom: "24px" }}
               >
                 <pre className="px-10 py-9 leading-[2.1] tracking-[0.01em] overflow-hidden font-mono text-[13.5px]">
 {[
 "const developer = {",
-'  name: "Yash Sharma",',
-'  role: "Full Stack Developer",',
-'  skills: ["React", "Next.js", "TypeScript", "GSAP"],',
-'  focus: "Building scalable & beautiful web apps",',
-'  passion: "Animation, UI/UX, and Performance",',
+'  name: "Rohith Pranov V",',
+'  role: "Full Stack Developer · AI/ML Engineer · AWS ML Associate · UI/UX Designer",',
+'  skills: ["React", "Next.js", "FastAPI", "Python", "LangGraph", "Flutter", "AWS"],',
+'  focus: "Shipping production-grade AI systems & cloud-native ML pipelines",',
+'  passion: "Intelligent automation, ML engineering & forensic tech",',
 "};",
 "",
 "// Let's build something extraordinary",
@@ -483,6 +553,14 @@ export const VSCodePortfolio: React.FC = () => {
                       { node: <TechIcon kind="ts" />, title: "TypeScript", ariaLabel: "TypeScript", href: "https://www.typescriptlang.org" },
                       { node: <TechIcon kind="tw" />, title: "Tailwind CSS", ariaLabel: "Tailwind CSS", href: "https://tailwindcss.com" },
                       { node: <TechIcon kind="js" />, title: "JavaScript", ariaLabel: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
+                      { node: <TechIcon kind="aws" />, title: "AWS", ariaLabel: "AWS", href: "https://aws.amazon.com" },
+                      { node: <TechIcon kind="tf" />, title: "TensorFlow / TFLite", ariaLabel: "TensorFlow", href: "https://www.tensorflow.org" },
+                      { node: <TechIcon kind="hf" />, title: "HuggingFace", ariaLabel: "HuggingFace", href: "https://huggingface.co" },
+                      { node: <TechIcon kind="lg" />, title: "LangGraph", ariaLabel: "LangGraph", href: "https://www.langchain.com/langgraph" },
+                      { node: <TechIcon kind="claude" />, title: "Claude", ariaLabel: "Claude", href: "https://claude.ai" },
+                      { node: <TechIcon kind="flutter" />, title: "Flutter", ariaLabel: "Flutter", href: "https://flutter.dev" },
+                      { node: <TechIcon kind="github" />, title: "GitHub", ariaLabel: "GitHub", href: "https://github.com" },
+                      { node: <TechIcon kind="docker" />, title: "Docker", ariaLabel: "Docker", href: "https://www.docker.com" },
                     ]}
                     speed={32}
                     direction="left"

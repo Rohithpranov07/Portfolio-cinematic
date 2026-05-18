@@ -5,12 +5,12 @@ import FlowArt, { FlowSection } from '@/components/ui/story-scroll';
 export default function StoryScrollDemo() {
   return (
     <FlowArt aria-label="Flow Art presentation">
-      <FlowSection aria-label="Who we are" style={{ backgroundColor: '#fd5200', color: '#fff' }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">01 — Who we are</p>
+      <FlowSection aria-label="Who I AM" style={{ backgroundColor: '#fd5200', color: '#fff' }}>
+        <p className="text-xs font-bold uppercase tracking-[0.2em]">01 — WHO I AM</p>
         <hr className="my-[2vw] border-none border-t border-black opacity-100" />
         <div>
           <h1 className="text-[clamp(2.5rem,8.5vw,9rem)] font-bold leading-[0.9] uppercase tracking-tight">
-            Create
+            BUILD
             <br />
             Without
             <br />
@@ -19,8 +19,10 @@ export default function StoryScrollDemo() {
         </div>
         <hr className="my-[2vw] border-none border-t border-black opacity-100" />
         <p className="mt-auto max-w-[50ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
-          We believe every artist deserves a platform that puts creativity first. No algorithms, no
-          noise — just pure art and the people who make it.
+          I'm a CSE student at VIT Vellore who
+doesn't wait to be assigned problems — I find them,
+build for them, and ship. No excuses, no shortcuts,
+just clean systems and real output.
         </p>
       </FlowSection>
 
@@ -29,58 +31,64 @@ export default function StoryScrollDemo() {
         <hr className="my-[2vw] border-none border-t border-white/60" />
         <div>
           <h2 className="text-[clamp(2.5rem,8.5vw,9rem)] font-bold leading-[0.9] uppercase tracking-tight">
-            Art
+            IMPACT
             <br />
-            First
+            OVER
             <br />
-            Always
+            NOISE
           </h2>
         </div>
         <hr className="my-[2vw] border-none border-t border-white/60" />
         <p className="max-w-[50ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
-          A global community built for artists, by artists. We&apos;re rewriting the rules of how
-          creative work gets seen, shared, and valued.
+          Not here to fill a GitHub with dead repos.
+Every line of code I write has a purpose —
+to solve something real, for someone real.
         </p>
         <hr className="my-[2vw] border-none border-t border-white/60" />
         <div className="flex flex-wrap gap-[3vw]">
           <div className="min-w-45 flex-1">
-            <p className="mb-2 text-sm font-bold uppercase tracking-wider">Discovery</p>
+            <p className="mb-2 text-sm font-bold uppercase tracking-wider">CURIOSITY</p>
             <p className="text-[clamp(0.85rem,1.3vw,1.05rem)] leading-relaxed opacity-75">
-              Human-curated collections that put real eyes on real art. No algorithms deciding your fate.
+              I don't stop at "it works." I dig into
+why it works, break it, and rebuild it
+better every single time.
             </p>
           </div>
           <div className="min-w-45 flex-1">
-            <p className="mb-2 text-sm font-bold uppercase tracking-wider">Community</p>
+            <p className="mb-2 text-sm font-bold uppercase tracking-wider">CRAFT</p>
             <p className="text-[clamp(0.85rem,1.3vw,1.05rem)] leading-relaxed opacity-75">
-              Find collaborators, mentors, and fellow creatives who push your work forward.
+              Clean architecture, intentional design,
+and code that the next developer
+actually wants to read.
             </p>
           </div>
           <div className="min-w-45 flex-1">
-            <p className="mb-2 text-sm font-bold uppercase tracking-wider">Value</p>
+            <p className="mb-2 text-sm font-bold uppercase tracking-wider">IMPACT</p>
             <p className="text-[clamp(0.85rem,1.3vw,1.05rem)] leading-relaxed opacity-75">
-              Fair pricing. Transparent commissions. Artists keep what they earn. Always.
+              If it doesn't solve a real problem,
+it doesn't ship. Every project starts
+with a why, not a what.
             </p>
           </div>
         </div>
       </FlowSection>
 
       <FlowSection aria-label="How it works" style={{ backgroundColor: '#F5F0E8', color: '#000' }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">03 — How it works</p>
+        <p className="text-xs font-bold uppercase tracking-[0.2em]">03 — HOW I WORK</p>
         <hr className="my-[2vw] border-none border-t border-black/60" />
         <div>
           <h2 className="text-[clamp(2.5rem,8.5vw,9rem)] font-bold leading-[0.9] uppercase tracking-tight">
-            Show
+            THINK.
             <br />
-            Up.
+            BUILD.
             <br />
-            Stand
-            <br />
-            Out.
+            SHIP.
           </h2>
         </div>
         <hr className="my-[2vw] border-none border-t border-black/60" />
         <p className="max-w-[50ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
-          Three steps. Zero complexity. Your creative career starts moving the moment you sign up.
+          No overcomplicated process. Just clear thinking,
+deliberate execution, and something real at the end.
         </p>
       </FlowSection>
 
@@ -89,35 +97,38 @@ export default function StoryScrollDemo() {
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <div>
           <h2 className="text-[clamp(2.5rem,8.5vw,9rem)] font-bold leading-[0.9] uppercase tracking-tight">
-            Future
+            BUILT
             <br />
-            Of
+            TO
             <br />
-            Art
+            LEAD.
           </h2>
         </div>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <p className="max-w-[50ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
-          We&apos;re not just building a platform. We&apos;re building a movement.
+          Not just to write code — but to architect
+the systems, lead the teams, and define
+the standards that the next generation
+of engineers will build on.
         </p>
       </FlowSection>
 
       <FlowSection aria-label="Join us" style={{ backgroundColor: '#000', color: '#fff' }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">05 — Join us</p>
+        <p className="text-xs font-bold uppercase tracking-[0.2em]">05 — LET'S TALK</p>
         <hr className="my-[2vw] border-none border-t border-white/60" />
         <div>
           <h2 className="text-[clamp(2.5rem,8.5vw,9rem)] font-bold leading-[0.9] uppercase tracking-tight">
-            Ready
+            GOT AN
             <br />
-            To
+            IDEA?
             <br />
-            Begin?
+            LET'S BUILD.
           </h2>
         </div>
         <hr className="my-[2vw] border-none border-t border-white/60" />
         <p className="mt-auto max-w-[50ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
-          Take control of your creative journey. Join now and let&apos;s shape the future of the art
-          world together.
+          Whether it's an internship, a collaboration, or just
+a problem worth solving — my inbox is open.
         </p>
       </FlowSection>
     </FlowArt>

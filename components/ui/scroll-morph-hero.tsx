@@ -281,7 +281,7 @@ export default function IntroAnimation({ scrollProgress }: IntroAnimationProps =
                         transition={{ duration: 1 }}
                         className="text-2xl font-medium tracking-tight text-gray-800 md:text-4xl"
                     >
-                        The future is built on AI.
+                        Every line of code has a story.
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0 }}
@@ -297,12 +297,16 @@ export default function IntroAnimation({ scrollProgress }: IntroAnimationProps =
                     style={{ opacity: contentOpacity, y: contentY }}
                     className="absolute top-[10%] z-10 flex flex-col items-center justify-center text-center pointer-events-none px-4"
                 >
-                    <h2 className="text-3xl md:text-5xl font-semibold text-gray-900 tracking-tight mb-4">
-                        Explore Our Vision
+                    <h2
+                        className="text-3xl md:text-5xl font-semibold text-gray-900"
+                        style={{ letterSpacing: "0.08em", marginBottom: "16px" }}
+                    >
+                        Explore My Work
                     </h2>
                     <p className="text-sm md:text-base text-gray-600 max-w-lg leading-relaxed">
-                        Discover a world where technology meets creativity. <br className="hidden md:block" />
-                        Scroll through our curated collection of innovations designed to shape the future.
+                        Each project here is a problem I chose to solve. <br className="hidden md:block" />
+                        Scroll through and see how I think,
+what I build, and why it matters.
                     </p>
                 </motion.div>
 

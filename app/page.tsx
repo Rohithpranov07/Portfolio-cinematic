@@ -21,9 +21,9 @@ export default function Home() {
       <FrameToFullscreen
         titleComponent={
           <h1 className="text-4xl md:text-5xl font-semibold text-white">
-            Your headline here <br />
+            Crafting digital experiences that <br />
             <ScrollFloat stagger={0.8} textClassName="text-white" scrollRange={[0.05, 0.48]}>
-              Goes here
+              Come Alive
             </ScrollFloat>
           </h1>
         }
@@ -42,7 +42,7 @@ export default function Home() {
             <span className="block text-[clamp(2.5rem,9vw,8rem)] font-bold uppercase leading-[0.9] tracking-tight">
               Who
               <br />
-              We Are
+              I Am
             </span>
           </div>
         }
@@ -88,10 +88,9 @@ export default function Home() {
             <span className="text-xs font-bold uppercase tracking-[0.4em] opacity-70">
               Chapter 03
             </span>
-            <span className="block text-[clamp(2.5rem,9vw,8rem)] font-bold uppercase leading-[0.9] tracking-tight">
-              A Field
-              <br />
-              Of Stills
+            <span className="text-[clamp(2.5rem,9vw,8rem)] font-bold uppercase leading-[0.9] tracking-tight flex flex-col items-center" style={{ whiteSpace: "nowrap" }}>
+              <span>DESIGNED</span>
+              <span>WITH&nbsp;INTENT</span>
             </span>
           </div>
         }

@@ -92,13 +92,7 @@ export const CardCarousel: React.FC<CarouselProps> = ({
             boxSizing: "border-box",
           }}
         >
-          <Badge
-            variant="outline"
-            className="absolute left-4 top-6 rounded-[14px] border border-white/10 text-base md:left-6"
-          >
-            <SparklesIcon className="fill-[#EEBDE0] stroke-1 text-neutral-200" />{" "}
-            Latest component
-          </Badge>
+          
           <div
             style={{
               display: "flex",
@@ -110,10 +104,11 @@ export const CardCarousel: React.FC<CarouselProps> = ({
             }}
           >
             <h3 style={{ fontSize: "2.25rem", opacity: 0.85, fontWeight: 700, letterSpacing: "-0.02em" }}>
-              Card Carousel
+              UI/UX Design Work
             </h3>
             <p style={{ marginTop: "0.5rem", opacity: 0.7 }}>
-              Seamless Images carousel animation.
+              A curated collection of interfaces designed
+with purpose, precision, and personality.
             </p>
           </div>
 

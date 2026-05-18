@@ -104,17 +104,96 @@ export const HeroParallax = ({
 export const Header = () => {
   return (
     <div
-      className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0"
-      style={{ paddingTop: "25vh", paddingLeft: "15vh" }}
+      className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0"
+      style={{ paddingTop: "25vh", paddingLeft: "15vh", marginBottom: "20px" }}
     >
-      <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
-        The Ultimate <br /> development studio
+      {/* Eyebrow / kicker */}
+      <div
+        className="flex items-center text-[11px] uppercase text-neutral-400 dark:text-neutral-500"
+        style={{ gap: "14px", marginBottom: "28px", letterSpacing: "0.32em" }}
+      >
+        <span
+          aria-hidden
+          style={{
+            display: "inline-block",
+            width: "48px",
+            height: "1px",
+            background:
+              "linear-gradient(90deg, transparent, rgba(167,139,250,0.9))",
+          }}
+        />
+        <span className="font-medium">Chapter 02 — Selected Work</span>
+      </div>
+
+      {/* Title */}
+      <h1
+        className="font-bold dark:text-white"
+        style={{
+          fontSize: "clamp(2.25rem, 6.4vw, 5.75rem)",
+          lineHeight: 0.98,
+          letterSpacing: "-0.035em",
+          marginBottom: "36px",
+        }}
+      >
+        Building products
+        <br />
+        <span
+          style={{
+            backgroundImage:
+              "linear-gradient(92deg, #ffffff 0%, #c4b5fd 55%, #a78bfa 100%)",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
+            fontStyle: "italic",
+            fontWeight: 500,
+          }}
+        >
+          with intelligence.
+        </span>
       </h1>
-      <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
-        We build beautiful products with the latest technologies and frameworks.
-        We are a team of passionate developers and designers that love to build
-        amazing products.
+
+      {/* Hairline divider */}
+      <div
+        aria-hidden
+        style={{
+          width: "84px",
+          height: "1px",
+          marginBottom: "32px",
+          background:
+            "linear-gradient(90deg, rgba(167,139,250,0.55), rgba(167,139,250,0))",
+        }}
+      />
+
+      {/* Body copy */}
+      <p
+        style={{
+          maxWidth: "64ch",
+          fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
+          lineHeight: 1.8,
+          letterSpacing: "0.005em",
+          color: "#ffffff",
+          opacity: 1,
+          fontWeight: 400,
+        }}
+      >
+        Driven by curiosity and a deep obsession with engineering, I build at
+        the intersection of technology, intelligence, and design. Every project
+        here reflects a deliberate process — from architectural decisions to
+        the finest interaction detail — crafted for scalability, real-world
+        impact, and experiences that feel as good as they perform.
       </p>
+
+      {/* Meta row */}
+      <div
+        className="flex items-center text-[11px] uppercase text-neutral-500"
+        style={{ gap: "18px", marginTop: "40px", letterSpacing: "0.28em" }}
+      >
+        <span>2024 — Present</span>
+        <span aria-hidden style={{ width: "4px", height: "4px", borderRadius: "9999px", background: "#a78bfa" }} />
+        <span>Engineering · Design · AI</span>
+        <span aria-hidden style={{ width: "4px", height: "4px", borderRadius: "9999px", background: "#a78bfa" }} />
+        <span>Scroll to explore</span>
+      </div>
     </div>
   );
 };
