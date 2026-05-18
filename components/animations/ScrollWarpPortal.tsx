@@ -45,7 +45,7 @@ export const ScrollWarpPortal: React.FC<Props> = ({
         : [];
 
       // Frames start tiny at center, invisible
-      gsap.set(frameEls, (i) => ({
+      gsap.set(frameEls, (i: number) => ({
         scale: 0.12,
         opacity: 0,
         force3D: true,

@@ -41,7 +41,10 @@ export default function RootLayout({
       className={`${cormorant.variable} ${dmSans.variable}`}
       suppressHydrationWarning
     >
-      <body className="bg-[#080808] text-[#f0ece4] antialiased overflow-x-hidden">
+      <body
+        className="bg-[#080808] text-[#f0ece4] antialiased overflow-x-hidden"
+        suppressHydrationWarning
+      >
         <div className="noise-overlay" aria-hidden="true" />
         <PageReveal />
         <SmoothScrollProvider>
