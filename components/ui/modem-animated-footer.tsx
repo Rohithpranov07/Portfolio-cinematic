@@ -4,6 +4,10 @@ import Link from "next/link";
 import { NotepadTextDashed } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+const isExternalUrl = (href: string) => /^https?:\/\//i.test(href);
+const isProtocolLink = (href: string) =>
+  /^(mailto:|tel:|sms:)/i.test(href);
+
 interface FooterLink {
   label: string;
   href: string;
@@ -64,64 +68,107 @@ export const Footer = ({
                     justifyItems: "center",
                   }}
                 >
-                  {socialLinks.map((link, index) => (
-                    <Link
-                      key={`s-${index}`}
-                      href={link.href}
-                      className="text-muted-foreground hover:text-foreground transition-colors flex justify-center"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ gridRow: 1, gridColumn: index + 1 }}
-                    >
-                      <div className="w-6 h-6 hover:scale-110 duration-300 flex items-center justify-center">
-                        {link.icon}
-                      </div>
-                      <span className="sr-only">{link.label}</span>
-                    </Link>
-                  ))}
-                  {navLinks.map((link, index) => (
-                    <Link
-                      key={`n-${index}`}
-                      className="hover:text-foreground duration-300 hover:font-semibold text-base font-medium text-muted-foreground text-center"
-                      href={link.href}
-                      style={{ gridRow: 2, gridColumn: index + 1 }}
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
+                  {socialLinks.map((link, index) => {
+                    const proto = isProtocolLink(link.href);
+                    const external = isExternalUrl(link.href);
+                    return (
+                      <a
+                        key={`s-${index}`}
+                        href={link.href}
+                        className="text-muted-foreground hover:text-foreground transition-colors flex justify-center"
+                        target={proto ? undefined : external ? "_blank" : undefined}
+                        rel={external ? "noopener noreferrer" : undefined}
+                        style={{ gridRow: 1, gridColumn: index + 1 }}
+                      >
+                        <div className="w-6 h-6 hover:scale-110 duration-300 flex items-center justify-center">
+                          {link.icon}
+                        </div>
+                        <span className="sr-only">{link.label}</span>
+                      </a>
+                    );
+                  })}
+                  {navLinks.map((link, index) => {
+                    const proto = isProtocolLink(link.href);
+                    const external = isExternalUrl(link.href);
+                    if (proto || external) {
+                      return (
+                        <a
+                          key={`n-${index}`}
+                          className="hover:text-foreground duration-300 hover:font-semibold text-base font-medium text-muted-foreground text-center"
+                          href={link.href}
+                          target={proto ? undefined : "_blank"}
+                          rel={external ? "noopener noreferrer" : undefined}
+                          style={{ gridRow: 2, gridColumn: index + 1 }}
+                        >
+                          {link.label}
+                        </a>
+                      );
+                    }
+                    return (
+                      <Link
+                        key={`n-${index}`}
+                        className="hover:text-foreground duration-300 hover:font-semibold text-base font-medium text-muted-foreground text-center"
+                        href={link.href}
+                        style={{ gridRow: 2, gridColumn: index + 1 }}
+                      >
+                        {link.label}
+                      </Link>
+                    );
+                  })}
                 </div>
               ) : (
                 <>
                   {socialLinks.length > 0 && (
                     <div className="flex mt-14 gap-8">
-                      {socialLinks.map((link, index) => (
-                        <Link
-                          key={index}
-                          href={link.href}
-                          className="text-muted-foreground hover:text-foreground transition-colors"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <div className="w-6 h-6 hover:scale-110 duration-300">
-                            {link.icon}
-                          </div>
-                          <span className="sr-only">{link.label}</span>
-                        </Link>
-                      ))}
+                      {socialLinks.map((link, index) => {
+                        const proto = isProtocolLink(link.href);
+                        const external = isExternalUrl(link.href);
+                        return (
+                          <a
+                            key={index}
+                            href={link.href}
+                            className="text-muted-foreground hover:text-foreground transition-colors"
+                            target={proto ? undefined : external ? "_blank" : undefined}
+                            rel={external ? "noopener noreferrer" : undefined}
+                          >
+                            <div className="w-6 h-6 hover:scale-110 duration-300">
+                              {link.icon}
+                            </div>
+                            <span className="sr-only">{link.label}</span>
+                          </a>
+                        );
+                      })}
                     </div>
                   )}
 
                   {navLinks.length > 0 && (
                     <div className="flex flex-wrap justify-center gap-10 mt-14 text-base font-medium text-muted-foreground max-w-full px-4">
-                      {navLinks.map((link, index) => (
-                        <Link
-                          key={index}
-                          className="hover:text-foreground duration-300 hover:font-semibold"
-                          href={link.href}
-                        >
-                          {link.label}
-                        </Link>
-                      ))}
+                      {navLinks.map((link, index) => {
+                        const proto = isProtocolLink(link.href);
+                        const external = isExternalUrl(link.href);
+                        if (proto || external) {
+                          return (
+                            <a
+                              key={index}
+                              className="hover:text-foreground duration-300 hover:font-semibold"
+                              href={link.href}
+                              target={proto ? undefined : "_blank"}
+                              rel={external ? "noopener noreferrer" : undefined}
+                            >
+                              {link.label}
+                            </a>
+                          );
+                        }
+                        return (
+                          <Link
+                            key={index}
+                            className="hover:text-foreground duration-300 hover:font-semibold"
+                            href={link.href}
+                          >
+                            {link.label}
+                          </Link>
+                        );
+                      })}
                     </div>
                   )}
                 </>

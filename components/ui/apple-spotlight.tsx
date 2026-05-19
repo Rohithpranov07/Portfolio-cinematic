@@ -161,8 +161,14 @@ const SearchResultCard = ({
 }: SearchResultCardProps & { onActivate?: () => void }) => (
   <a
     href={link}
-    target={link.startsWith("#") || link.startsWith("/") ? "_self" : "_blank"}
-    rel="noreferrer"
+    target={
+      link.startsWith("#") ||
+      link.startsWith("/") ||
+      /^(mailto:|tel:|sms:)/i.test(link)
+        ? "_self"
+        : "_blank"
+    }
+    rel={/^https?:\/\//i.test(link) ? "noopener noreferrer" : undefined}
     className="overflow-hidden w-full group/card"
     onClick={(e) => {
       if (link.startsWith("#")) {
@@ -171,6 +177,10 @@ const SearchResultCard = ({
         // Defer the scroll a frame so the spotlight starts closing first —
         // avoids a jolt as the modal unmounts mid-animation.
         requestAnimationFrame(() => smoothScrollToId(link.slice(1)));
+      } else if (/^(mailto:|tel:|sms:)/i.test(link)) {
+        // Close the spotlight before the OS handler hijacks focus; the
+        // browser will still navigate to the protocol URL after this tick.
+        onActivate?.();
       }
     }}
   >
@@ -414,7 +424,10 @@ const AppleSpotlight = ({
       requestAnimationFrame(() => smoothScrollToId(first.link.slice(1)));
       return;
     }
-    if (first.link.startsWith("/")) {
+    if (
+      first.link.startsWith("/") ||
+      /^(mailto:|tel:|sms:)/i.test(first.link)
+    ) {
       window.location.href = first.link;
     } else {
       window.open(first.link, "_blank", "noopener,noreferrer");
