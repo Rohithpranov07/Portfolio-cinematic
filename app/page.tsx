@@ -112,9 +112,13 @@ export default function Home() {
             handle="rohithpranov"
             status="Online"
             contactText="Contact Me"
-            avatarUrl="/placeholder.svg"
+            avatarUrl="/profilecard.png"
+            miniAvatarUrl="/profilecard.png"
+            iconUrl="/iconpattern.png"
+            grainUrl="/grain.webp"
             showUserInfo
             enableTilt
+            enableMobileTilt
             behindGlowEnabled
             innerGradient="linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)"
           />

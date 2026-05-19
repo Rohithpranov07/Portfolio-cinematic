@@ -250,13 +250,13 @@
 }
 
 .pc-avatar-content .avatar {
-  width: 100%;
+  width: 82%;
   position: absolute;
   left: 50%;
   transform-origin: 50% 100%;
   transform: translateX(calc(-50% + (var(--pointer-from-left) - 0.5) * 6px)) translateZ(0)
     scaleY(calc(1 + (var(--pointer-from-top) - 0.5) * 0.02)) scaleX(calc(1 + (var(--pointer-from-left) - 0.5) * 0.01));
-  bottom: -1px;
+  bottom: -50px;
   backface-visibility: hidden;
   will-change: transform;
   transition: transform 120ms ease-out;
@@ -376,6 +376,7 @@
   font-weight: 600;
   margin: 0;
   font-size: min(5svh, 3em);
+  margin: 0;
   background-image: linear-gradient(to bottom, #fff, #6f6fbe);
   background-size: 1em 1.5em;
   -webkit-text-fill-color: transparent;
@@ -402,6 +403,7 @@
   0% {
     --bgrotate: 0deg;
   }
+
   100% {
     --bgrotate: 360deg;
   }
@@ -409,35 +411,152 @@
 
 @keyframes holo-bg {
   0% {
-    background-position: 0 var(--background-y), 0 0, center;
+    background-position:
+      0 var(--background-y),
+      0 0,
+      center;
   }
+
   100% {
-    background-position: 0 var(--background-y), 90% 90%, center;
+    background-position:
+      0 var(--background-y),
+      90% 90%,
+      center;
   }
 }
 
 @media (max-width: 768px) {
-  .pc-card { height: 70svh; max-height: 450px; }
-  .pc-details { top: 2em; }
-  .pc-details h3 { font-size: min(4svh, 2.5em); }
-  .pc-details p { font-size: 14px; }
-  .pc-user-info { --ui-inset: 15px; padding: 10px 12px; }
-  .pc-mini-avatar { width: 28px; height: 28px; }
-  .pc-user-details { gap: 10px; }
-  .pc-handle { font-size: 13px; }
-  .pc-status { font-size: 10px; }
-  .pc-contact-btn { padding: 6px 12px; font-size: 11px; }
+  .pc-card {
+    height: 70svh;
+    max-height: 450px;
+  }
+
+  .pc-details {
+    top: 2em;
+  }
+
+  .pc-details h3 {
+    font-size: min(4svh, 2.5em);
+  }
+
+  .pc-details p {
+    font-size: 14px;
+  }
+
+  .pc-user-info {
+    --ui-inset: 15px;
+    padding: 10px 12px;
+  }
+
+  .pc-mini-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .pc-user-details {
+    gap: 10px;
+  }
+
+  .pc-handle {
+    font-size: 13px;
+  }
+
+  .pc-status {
+    font-size: 10px;
+  }
+
+  .pc-contact-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
 }
 
 @media (max-width: 480px) {
-  .pc-card { height: 60svh; max-height: 380px; }
-  .pc-details { top: 1.5em; }
-  .pc-details h3 { font-size: min(3.5svh, 2em); }
-  .pc-details p { font-size: 12px; top: -8px; }
-  .pc-user-info { --ui-inset: 12px; padding: 8px 10px; }
-  .pc-mini-avatar { width: 24px; height: 24px; }
-  .pc-user-details { gap: 8px; }
-  .pc-handle { font-size: 12px; }
-  .pc-status { font-size: 9px; }
-  .pc-contact-btn { padding: 5px 10px; font-size: 10px; border-radius: 50px; }
+  .pc-card {
+    height: 60svh;
+    max-height: 380px;
+  }
+
+  .pc-details {
+    top: 1.5em;
+  }
+
+  .pc-details h3 {
+    font-size: min(3.5svh, 2em);
+  }
+
+  .pc-details p {
+    font-size: 12px;
+    top: -8px;
+  }
+
+  .pc-user-info {
+    --ui-inset: 12px;
+    padding: 8px 10px;
+  }
+
+  .pc-mini-avatar {
+    width: 24px;
+    height: 24px;
+  }
+
+  .pc-user-details {
+    gap: 8px;
+  }
+
+  .pc-handle {
+    font-size: 12px;
+  }
+
+  .pc-status {
+    font-size: 9px;
+  }
+
+  .pc-contact-btn {
+    padding: 5px 10px;
+    font-size: 10px;
+    border-radius: 50px;
+  }
+}
+
+@media (max-width: 320px) {
+  .pc-card {
+    height: 55svh;
+    max-height: 320px;
+  }
+
+  .pc-details h3 {
+    font-size: min(3svh, 1.5em);
+  }
+
+  .pc-details p {
+    font-size: 11px;
+  }
+
+  .pc-user-info {
+    padding: 6px 8px;
+  }
+
+  .pc-mini-avatar {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pc-user-details {
+    gap: 6px;
+  }
+
+  .pc-handle {
+    font-size: 11px;
+  }
+
+  .pc-status {
+    font-size: 8px;
+  }
+
+  .pc-contact-btn {
+    padding: 4px 8px;
+    font-size: 9px;
+    border-radius: 50px;
+  }
 }

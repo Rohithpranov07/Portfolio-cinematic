@@ -15,36 +15,36 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "Lumina",
-    description: "AI-powered design system generator.",
-    year: "2024",
-    link: "#",
-    image:
-      "https://plus.unsplash.com/premium_photo-1723489242223-865b4a8cf7b8?q=80&w=2670&auto=format&fit=crop",
+    title: "RiderShield AI",
+    description:
+      "5-layer smart rider safety system with real-time hazard alerts and flood mapping.",
+    year: "2025",
+    link: "https://github.com/Rohithpranov07/RIDERSHIELD_AI.git",
+    image: "/Ridershieldplan-1.png",
   },
   {
-    title: "Flux",
-    description: "Real-time collaboration for creative teams.",
-    year: "2024",
-    link: "#",
-    image:
-      "https://images.unsplash.com/photo-1530435460869-d13625c69bbf?q=80&w=2670&auto=format&fit=crop",
+    title: "KodaiRateIQ",
+    description:
+      "AI-powered competitor rate monitoring with Gemini-generated pricing strategies.",
+    year: "2025",
+    link: "https://kodai-rate-iq.vercel.app/",
+    image: "/KodairateIQ.png",
   },
   {
-    title: "Prism",
-    description: "Color palette extraction from any image.",
-    year: "2023",
-    link: "#",
-    image:
-      "https://i.pinimg.com/1200x/99/ca/5c/99ca5cf82cf12df8801f7b2bef38d325.jpg",
+    title: "ProofStack",
+    description:
+      "Multi-signal developer trust platform delivering a single PST Trust Score.",
+    year: "2025",
+    link: "https://github.com/Rohithpranov07/ProofStack.git",
+    image: "/Proofstack-1.png",
   },
   {
-    title: "Vertex",
-    description: "3D modeling toolkit for the web.",
-    year: "2023",
-    link: "#",
-    image:
-      "https://i.pinimg.com/736x/7c/15/39/7c1539cf7ff0207cb49ce0d338de1e5f.jpg",
+    title: "CyberShield India",
+    description:
+      "AI + blockchain digital forensics platform for detecting and anchoring tamper-proof evidence.",
+    year: "2025",
+    link: "https://github.com/Rohithpranov07/cybershield-india.git",
+    image: "/cybershield-1.png",
   },
 ];
 
@@ -144,6 +144,8 @@ export function ProjectShowcase() {
           <a
             key={project.title}
             href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group block w-full"
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}

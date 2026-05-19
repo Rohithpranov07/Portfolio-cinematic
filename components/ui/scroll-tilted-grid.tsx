@@ -11,19 +11,22 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export const DEFAULT_GRID_IMAGES: readonly string[] = [
-  "https://i.pinimg.com/736x/de/0f/9c/de0f9c57bf7ae1c48ea467ffe9817fdc.jpg",
-  "https://i.pinimg.com/736x/80/17/36/8017367dbe52dae63b58a678018795ee.jpg",
-  "https://i.pinimg.com/736x/0d/b6/1f/0db61f5245c835228df83398f6d96ceb.jpg",
-  "https://i.pinimg.com/736x/39/27/f5/3927f53cebd0a148ba806fbd15e1fdd9.jpg",
-  "https://i.pinimg.com/1200x/5f/ae/6d/5fae6de0940fe4a2471f34fb1b259b77.jpg",
-  "https://i.pinimg.com/736x/df/04/61/df0461286b3e5291300adbffa70b3e9e.jpg",
-  "https://i.pinimg.com/736x/6d/45/f1/6d45f1c96c3316c3bc5055ed6e8e3b8f.jpg",
-  "https://i.pinimg.com/736x/a9/4c/e0/a94ce014127cfded1c7160b110eb7a86.jpg",
-  "https://i.pinimg.com/736x/fe/f0/8a/fef08a661d0ef55561d99a293c79dd81.jpg",
-  "https://i.pinimg.com/736x/84/c6/10/84c610443c77c1e34398f071fdc3b71a.jpg",
-  "https://i.pinimg.com/736x/54/13/9d/54139d6fd658b1d5e71cdc07ea37a57c.jpg",
-  "https://i.pinimg.com/736x/2d/0b/74/2d0b74227b38d56fcc8b9f4872addcfc.jpg",
+  "/Design_img/Ben-10.png",
+  "/Design_img/Boundary-1.png",
+  "/Design_img/Designathon-1.png",
+  "/Design_img/Echo-1.png",
+  "/Design_img/Emotion.png",
+  "/Design_img/Kodairatedesign-1.jpg",
+  "/Design_img/Mediation-1.png",
+  "/Design_img/Pablo.png",
+  "/Design_img/Ridershield-1.jpeg",
+  "/Design_img/Shopsmart-1.png",
+  "/Design_img/Sony.png",
+  "/Design_img/ev-1.png",
 ];
+
+const CONTAIN_KEYS = ["Boundary", "Kodairatedesign", "Mediation", "Ridershield", "ev-", "Shopsmart", "Ben-10", "Sony", "Emotion", "Pablo"];
+const isContain = (src: string) => CONTAIN_KEYS.some((k) => src.includes(k));
 
 const easeIntoFocus = cubicBezier(0.22, 1, 0.36, 1);
 const easeOutOfFocus = cubicBezier(0, 0, 0.58, 1);
@@ -108,6 +111,9 @@ function Tile({
 
   const filter = useMotionTemplate`blur(${blur}px) brightness(${bright}) contrast(${contrast})`;
 
+  const topAlign = isContain(src);
+  const bgPosition = topAlign ? "center top" : "center";
+
   if (reduce) {
     return (
       <figure ref={ref} className="relative z-10 m-0">
@@ -116,8 +122,8 @@ function Tile({
           style={{ aspectRatio, borderRadius: rounded }}
         >
           <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url("${src}")` }}
+            className="absolute inset-0 bg-cover bg-no-repeat"
+            style={{ backgroundImage: `url("${src}")`, backgroundPosition: bgPosition }}
           />
         </div>
       </figure>
@@ -145,9 +151,10 @@ function Tile({
         }}
       >
         <motion.div
-          className="absolute inset-0 bg-cover bg-center will-change-transform"
+          className="absolute inset-0 bg-cover bg-no-repeat will-change-transform"
           style={{
             backgroundImage: `url("${src}")`,
+            backgroundPosition: bgPosition,
             scaleY: innerSY,
             backfaceVisibility: "hidden",
           }}

@@ -7,6 +7,8 @@ export type AnimationPhase = "scatter" | "line" | "circle" | "bottom-strip";
 
 interface FlipCardProps {
     src: string;
+    objectPosition?: string;
+    link?: string;
     index: number;
     total: number;
     phase: AnimationPhase;
@@ -18,6 +20,8 @@ const IMG_HEIGHT = 85;
 
 function FlipCard({
     src,
+    objectPosition,
+    link,
     index,
     target,
 }: FlipCardProps) {
@@ -43,6 +47,9 @@ function FlipCard({
                 perspective: "1000px",
             }}
             className="cursor-pointer group"
+            onClick={() => {
+                if (link) window.open(link, "_blank", "noopener,noreferrer");
+            }}
         >
             <motion.div
                 className="relative h-full w-full"
@@ -58,6 +65,7 @@ function FlipCard({
                         src={src}
                         alt={`hero-${index}`}
                         className="h-full w-full object-cover"
+                        style={{ objectPosition: objectPosition ?? "center" }}
                     />
                     <div className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
                 </div>
@@ -66,8 +74,8 @@ function FlipCard({
                     style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                 >
                     <div className="text-center">
-                        <p className="text-[8px] font-bold text-blue-400 uppercase tracking-widest mb-1">View</p>
-                        <p className="text-xs font-medium text-white">Details</p>
+                        <p className="text-[8px] font-bold text-blue-400 uppercase tracking-widest mb-1">Click</p>
+                        <p className="text-xs font-medium text-white">Me</p>
                     </div>
                 </div>
             </motion.div>
@@ -78,28 +86,23 @@ function FlipCard({
 const TOTAL_IMAGES = 20;
 const MAX_SCROLL = 3000;
 
-const IMAGES = [
-    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&q=80",
-    "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=300&q=80",
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=300&q=80",
-    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&q=80",
-    "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=300&q=80",
-    "https://images.unsplash.com/photo-1506765515384-028b60a970df?w=300&q=80",
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&q=80",
-    "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=300&q=80",
-    "https://images.unsplash.com/photo-1500485035595-cbe6f645feb1?w=300&q=80",
-    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&q=80",
-    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&q=80",
-    "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=300&q=80",
-    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&q=80",
-    "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=300&q=80",
-    "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=300&q=80",
-    "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=300&q=80",
-    "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=300&q=80",
-    "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=300&q=80",
-    "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=300&q=80",
-    "https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?w=300&q=80",
+const PROJECT_THUMBS: { src: string; objectPosition: string; link: string }[] = [
+    { src: "/KodairateIQ.png", objectPosition: "left top", link: "https://kodai-rate-iq.vercel.app/" },
+    { src: "/Proofstack-1.png", objectPosition: "left top", link: "https://github.com/Rohithpranov07/ProofStack.git" },
+    { src: "/cybershield-1.png", objectPosition: "left top", link: "https://github.com/Rohithpranov07/cybershield-india.git" },
+    { src: "/oldportfolio-1.png", objectPosition: "left top", link: "https://portfolio-wheat-zeta-18.vercel.app" },
+    { src: "/Ridershield-1.jpeg", objectPosition: "center top", link: "https://github.com/Rohithpranov07/RIDERSHIELD_AI.git" },
+    { src: "/Quizwebsite-1.png", objectPosition: "left top", link: "https://iac-quiz-website.vercel.app" },
+    { src: "/Ridershieldplan-1.png", objectPosition: "center", link: "https://rider-shield-plan.vercel.app" },
+    { src: "/Cinematch-1.png", objectPosition: "center", link: "https://cine-match-h8u71tvrb-dharsanhunts-projects.vercel.app/" },
+    { src: "/weatherapp-1.png", objectPosition: "left top", link: "https://ambientweatherapp.netlify.app" },
+    { src: "/safetydashboard-1.png", objectPosition: "left top", link: "https://github.com/DharsanHunt/gas-safety-dashboard.git" },
+    { src: "/sentinal-1.png", objectPosition: "left top", link: "https://github.com/Rohithpranov07/Sentinel.git" },
+    { src: "/Sentryx-1.png", objectPosition: "center", link: "https://github.com/Rohithpranov07/sentryx.git" },
 ];
+
+// 12 real projects + 8 duplicates (cycled) to fill TOTAL_IMAGES = 20 slots
+const IMAGES = Array.from({ length: TOTAL_IMAGES }, (_, i) => PROJECT_THUMBS[i % PROJECT_THUMBS.length]);
 
 const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t;
 
@@ -311,7 +314,7 @@ what I build, and why it matters.
                 </motion.div>
 
                 <div className="relative flex items-center justify-center w-full h-full">
-                    {IMAGES.slice(0, TOTAL_IMAGES).map((src, i) => {
+                    {IMAGES.slice(0, TOTAL_IMAGES).map((image, i) => {
                         let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 };
 
                         if (introPhase === "scatter") {
@@ -382,7 +385,9 @@ what I build, and why it matters.
                         return (
                             <FlipCard
                                 key={i}
-                                src={src}
+                                src={image.src}
+                                objectPosition={image.objectPosition}
+                                link={image.link}
                                 index={i}
                                 total={TOTAL_IMAGES}
                                 phase={introPhase}

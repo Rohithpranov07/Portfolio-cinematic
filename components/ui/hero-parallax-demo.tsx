@@ -10,6 +10,7 @@ export const products = [
     title: "KodaiRateIQ",
     link: "https://kodai-rate-iq.vercel.app/",
     thumbnail: "/KodairateIQ.png",
+    objectPosition: "left top",
   },
   {
     title: "ProofStack",
