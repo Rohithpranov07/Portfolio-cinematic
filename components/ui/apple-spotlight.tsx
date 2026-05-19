@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Activity,
   Briefcase,
-  Calendar,
   ChevronRight,
   Code2,
   Files,
@@ -15,8 +14,6 @@ import {
   LayoutGrid,
   Mail,
   MessageSquare,
-  Music,
-  Send,
   Search,
   Settings,
   StickyNote,
@@ -115,9 +112,9 @@ const SpotlightInput = ({
 
   return (
     <div className="flex items-center w-full justify-start gap-7 h-24" style={{ paddingLeft: "3.5rem", paddingRight: "3.5rem" }}>
-      <motion.div layoutId="search-icon" className="text-[#a78bfa] shrink-0">
+      <div className="text-[#a78bfa] shrink-0">
         <Search className="!w-8 !h-8" />
-      </motion.div>
+      </div>
       <div className="flex-1 relative text-3xl py-2">
         {!hidePlaceholder && (
           <SpotlightPlaceholder text={placeholder} className={placeholderClassName} />
@@ -145,28 +142,76 @@ interface SearchResultCardProps extends SearchResult {
   isLast: boolean;
 }
 
+const smoothScrollToId = (id: string) => {
+  const target = document.getElementById(id);
+  if (!target) return;
+  const rect = target.getBoundingClientRect();
+  const absoluteTop = rect.top + window.scrollY;
+  // Native smooth scroll — browser optimizes for the user's reduced-motion
+  // settings, scrollbar thumb, and refresh rate. Feels the most natural.
+  window.scrollTo({ top: absoluteTop, behavior: "smooth" });
+};
+
 const SearchResultCard = ({
   icon,
   label,
   description,
   link,
-  isLast,
-}: SearchResultCardProps) => (
-  <a href={link} target="_blank" rel="noreferrer" className="overflow-hidden w-full group/card">
+  onActivate,
+}: SearchResultCardProps & { onActivate?: () => void }) => (
+  <a
+    href={link}
+    target={link.startsWith("#") || link.startsWith("/") ? "_self" : "_blank"}
+    rel="noreferrer"
+    className="overflow-hidden w-full group/card"
+    onClick={(e) => {
+      if (link.startsWith("#")) {
+        e.preventDefault();
+        onActivate?.();
+        // Defer the scroll a frame so the spotlight starts closing first —
+        // avoids a jolt as the modal unmounts mid-animation.
+        requestAnimationFrame(() => smoothScrollToId(link.slice(1)));
+      }
+    }}
+  >
     <div
       className={cn(
-        "flex items-center text-[#cfcfcf] justify-start gap-7 py-6 px-4 rounded-2xl w-full",
-        "hover:bg-[#a78bfa]/[0.08] hover:text-white transition-colors duration-150"
+        "relative flex items-center text-[#cfcfcf] justify-start gap-7 py-5 px-4 rounded-2xl w-full",
+        "transition-all duration-300 ease-out",
+        "group-hover/card:bg-[linear-gradient(90deg,rgba(167,139,250,0.14)_0%,rgba(167,139,250,0.04)_100%)]",
+        "group-hover/card:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_8px_24px_-12px_rgba(167,139,250,0.4)]"
       )}
     >
-      <div className="size-12 rounded-xl bg-[#15101f] border border-[#2a2240] text-[#c4b5fd] [&_svg]:stroke-[1.5] [&_svg]:size-[22px] aspect-square flex items-center justify-center shrink-0">
+      <span
+        aria-hidden
+        className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-0 rounded-r-full bg-gradient-to-b from-[#c4b5fd] to-[#a78bfa] transition-all duration-300 ease-out group-hover/card:h-8"
+      />
+      <div
+        className={cn(
+          "relative size-12 rounded-xl bg-[#15101f] border border-[#2a2240] text-[#c4b5fd]",
+          "[&_svg]:stroke-[1.5] [&_svg]:size-[22px] aspect-square flex items-center justify-center shrink-0",
+          "transition-all duration-300 ease-out",
+          "group-hover/card:border-[#a78bfa]/55 group-hover/card:bg-[#1f1830]",
+          "group-hover/card:shadow-[0_0_20px_-4px_rgba(167,139,250,0.45)]"
+        )}
+      >
         {icon}
       </div>
       <div className="flex flex-col min-w-0 gap-1.5">
-        <p className="font-medium font-mono text-[15px] truncate">{label}</p>
-        <p className="text-[13px] text-[#7a7a7a] truncate">{description}</p>
+        <p className="font-medium font-mono text-[15px] truncate transition-colors duration-300 group-hover/card:text-white">
+          {label}
+        </p>
+        <p className="text-[13px] text-[#7a7a7a] truncate transition-colors duration-300 group-hover/card:text-[#a8a3bd]">
+          {description}
+        </p>
       </div>
-      <div className="flex-1 flex items-center justify-end opacity-0 group-hover/card:opacity-100 transition-opacity duration-200 text-[#a78bfa] pr-2">
+      <div
+        className={cn(
+          "flex-1 flex items-center justify-end pr-2 text-[#a78bfa]",
+          "opacity-0 -translate-x-1 transition-all duration-300 ease-out",
+          "group-hover/card:opacity-100 group-hover/card:translate-x-0"
+        )}
+      >
         <ChevronRight className="size-5" />
       </div>
     </div>
@@ -176,9 +221,11 @@ const SearchResultCard = ({
 const SearchResultsContainer = ({
   searchResults,
   onHover,
+  onActivate,
 }: {
   searchResults: SearchResult[];
   onHover: (index: number | null) => void;
+  onActivate?: () => void;
 }) => (
   <motion.div
     layout
@@ -206,6 +253,7 @@ const SearchResultsContainer = ({
             description={result.description}
             link={result.link}
             isLast={index === searchResults.length - 1}
+            onActivate={onActivate}
           />
         </motion.div>
       ))
@@ -228,19 +276,16 @@ const DEFAULT_SHORTCUTS: Shortcut[] = [
 ];
 
 const DEFAULT_RESULTS: SearchResult[] = [
-  { icon: <Code2 />, label: "GitHub", description: "View source repositories", link: "https://github.com" },
-  { icon: <Briefcase />, label: "LinkedIn", description: "Professional profile", link: "https://linkedin.com" },
-  { icon: <Send />, label: "Twitter / X", description: "Follow updates", link: "https://x.com" },
-  { icon: <Mail />, label: "Email", description: "Get in touch", link: "mailto:hello@example.com" },
-  { icon: <Globe />, label: "Projects", description: "Browse featured work", link: "#projects" },
-  { icon: <Calendar />, label: "Schedule a call", description: "Book a meeting", link: "#contact" },
+  { icon: <Code2 />, label: "GitHub", description: "View source repositories", link: "https://github.com/Rohithpranov07" },
+  { icon: <Briefcase />, label: "LinkedIn", description: "Professional profile", link: "https://www.linkedin.com/in/rohith-pranov/" },
+  { icon: <Terminal />, label: "LeetCode", description: "Problem-solving profile", link: "https://leetcode.com/u/Rohithpranov/" },
+  { icon: <Mail />, label: "Email", description: "Get in touch", link: "mailto:rohithpranovv@gmail.com" },
+  { icon: <Globe />, label: "Projects", description: "Browse featured work", link: "#showcase" },
   { icon: <StickyNote />, label: "About", description: "Background & experience", link: "#about" },
   { icon: <ImageIcon />, label: "Gallery", description: "Visual portfolio", link: "#gallery" },
-  { icon: <Settings />, label: "Tech Stack", description: "Tools & technologies", link: "#stack" },
-  { icon: <Terminal />, label: "Resume", description: "Download CV", link: "/resume.pdf" },
-  { icon: <Folder />, label: "Case Studies", description: "Deep-dive write-ups", link: "#cases" },
+  { icon: <Settings />, label: "Flagship Projects", description: "Selected case studies", link: "#flagship" },
+  { icon: <Terminal />, label: "Resume", description: "Download CV", link: "https://drive.google.com/file/d/1_RlWFg78dGBueOH6he9EF3ptby07ZMML/view?usp=drive_link" },
   { icon: <MessageSquare />, label: "Contact", description: "Send a message", link: "#contact" },
-  { icon: <Music />, label: "Soundtrack", description: "What I'm listening to", link: "#now" },
 ];
 
 interface SpotlightSearchProps {
@@ -270,31 +315,26 @@ export const SpotlightSearch = ({
   return (
     <>
       <SVGFilter />
-      <AnimatePresence mode="popLayout" initial={false}>
-        {!open && (
-          <motion.button
-            key="spotlight-trigger"
-            layoutId="spotlight-shell"
-            onClick={() => setOpen(true)}
-            aria-label="Open search"
-            transition={{ layout: { duration: 0.5, type: "spring", bounce: 0.2 } }}
-            style={{ borderRadius: 5 }}
-            className={cn(
-              "group flex items-center gap-2 px-3 text-[11px] text-[#bdbdbd] bg-[#161616] border border-[#222] hover:border-[#a78bfa]/50 hover:bg-[#1a1424] hover:text-white transition-colors cursor-pointer",
-              triggerClassName
-            )}
-          >
-            <motion.span layoutId="search-icon" className="flex items-center text-[#a78bfa]">
-              <Search className="!w-3 !h-3" />
-            </motion.span>
-            <span className="truncate">Search portfolio…</span>
-            <span className="ml-auto flex items-center gap-1 text-[10px] text-[#7a7a7a]">
-              <kbd className="px-1 py-px rounded-[3px] bg-[#0d0a14] border border-[#2a2240] font-mono">⌘</kbd>
-              <kbd className="px-1 py-px rounded-[3px] bg-[#0d0a14] border border-[#2a2240] font-mono">K</kbd>
-            </span>
-          </motion.button>
-        )}
-      </AnimatePresence>
+      {!open && (
+        <button
+          onClick={() => setOpen(true)}
+          aria-label="Open search"
+          style={{ borderRadius: 5 }}
+          className={cn(
+            "group flex items-center gap-2 px-3 text-[11px] text-[#bdbdbd] bg-[#161616] border border-[#222] hover:border-[#a78bfa]/50 hover:bg-[#1a1424] hover:text-white transition-colors cursor-pointer",
+            triggerClassName
+          )}
+        >
+          <span className="flex items-center text-[#a78bfa]">
+            <Search className="!w-3 !h-3" />
+          </span>
+          <span className="truncate">Search portfolio…</span>
+          <span className="ml-auto flex items-center gap-1 text-[10px] text-[#7a7a7a]">
+            <kbd className="px-1 py-px rounded-[3px] bg-[#0d0a14] border border-[#2a2240] font-mono">⌘</kbd>
+            <kbd className="px-1 py-px rounded-[3px] bg-[#0d0a14] border border-[#2a2240] font-mono">K</kbd>
+          </span>
+        </button>
+      )}
       <AppleSpotlight
         shortcuts={shortcuts}
         results={results}
@@ -315,6 +355,7 @@ const AppleSpotlight = ({
   const [hoveredSearchResult, setHoveredSearchResult] = useState<number | null>(null);
   const [hoveredShortcut, setHoveredShortcut] = useState<number | null>(null);
   const [searchValue, setSearchValue] = useState("");
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
   // Escape to close
   useEffect(() => {
@@ -324,6 +365,25 @@ const AppleSpotlight = ({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, handleClose]);
+
+  // Close on any pointerdown outside the panel (needed because a transformed
+  // parent can constrain `fixed inset-0` and leave the topmost areas uncovered).
+  useEffect(() => {
+    if (!isOpen) return;
+    const t = setTimeout(() => {
+      const onPointerDown = (e: PointerEvent) => {
+        const panel = panelRef.current;
+        if (panel && !panel.contains(e.target as Node)) handleClose();
+      };
+      document.addEventListener("pointerdown", onPointerDown, true);
+      cleanup = () => document.removeEventListener("pointerdown", onPointerDown, true);
+    }, 0);
+    let cleanup: (() => void) | undefined;
+    return () => {
+      clearTimeout(t);
+      cleanup?.();
+    };
   }, [isOpen, handleClose]);
 
   // Lock body scroll when open
@@ -348,10 +408,18 @@ const AppleSpotlight = ({
 
   const openFirst = () => {
     const first = filtered[0];
-    if (first) {
-      window.open(first.link, first.link.startsWith("#") ? "_self" : "_blank");
+    if (!first) return;
+    if (first.link.startsWith("#")) {
       handleClose();
+      requestAnimationFrame(() => smoothScrollToId(first.link.slice(1)));
+      return;
     }
+    if (first.link.startsWith("/")) {
+      window.location.href = first.link;
+    } else {
+      window.open(first.link, "_blank", "noopener,noreferrer");
+    }
+    handleClose();
   };
 
   return (
@@ -374,6 +442,7 @@ const AppleSpotlight = ({
           />
 
           <div
+            ref={panelRef}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => {
               setHovered(false);
@@ -389,23 +458,25 @@ const AppleSpotlight = ({
             <AnimatePresence mode="popLayout">
               <motion.div
                 key="spotlight-panel"
-                layoutId="spotlight-shell"
-                transition={{ layout: { duration: 0.55, type: "spring", bounce: 0.18 } }}
+                initial={{ opacity: 0, scale: 0.96, y: 8 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.98, y: 4 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                 style={{ borderRadius: "30px" }}
                 className="h-full w-full flex flex-col items-center justify-start z-10 relative bg-[#0d0a14]/95 text-[#f0ece4] backdrop-blur-xl shadow-[0_30px_80px_-20px_rgba(167,139,250,0.35),0_0_0_1px_rgba(167,139,250,0.15)] overflow-hidden border border-[#231a36]"
               >
                 <SpotlightInput
                   placeholder={
-                    hoveredShortcut !== null
+                    !searchValue && hoveredShortcut !== null
                       ? shortcuts[hoveredShortcut].label
-                      : hoveredSearchResult !== null
+                      : !searchValue && hoveredSearchResult !== null
                         ? filtered[hoveredSearchResult]?.label ?? "Search"
                         : "Search portfolio…"
                   }
                   placeholderClassName={
-                    hoveredSearchResult !== null ? "text-[#c4b5fd]" : "text-[#7a7a7a]"
+                    !searchValue && hoveredSearchResult !== null ? "text-[#c4b5fd]" : "text-[#7a7a7a]"
                   }
-                  hidePlaceholder={!(hoveredSearchResult !== null || !searchValue)}
+                  hidePlaceholder={!!searchValue}
                   value={searchValue}
                   onChange={setSearchValue}
                   onEnter={openFirst}
@@ -415,6 +486,7 @@ const AppleSpotlight = ({
                   <SearchResultsContainer
                     searchResults={filtered}
                     onHover={setHoveredSearchResult}
+                    onActivate={handleClose}
                   />
                 )}
               </motion.div>

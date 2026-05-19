@@ -53,30 +53,37 @@ export default function Home() {
         }
       />
 
-      <StoryScrollDemo />
+      <div id="about">
+        <StoryScrollDemo />
+      </div>
 
-      <ScrollWarpPortal
-        voidColor="#050505"
-        accent="#c8a882"
-        scrollDistance="+=260%"
-        label={
-          <div className="flex flex-col items-center gap-4">
-            <span className="text-xs font-bold uppercase tracking-[0.4em] opacity-70">
-              Chapter 02
-            </span>
-            <span className="block text-[clamp(2.5rem,9vw,8rem)] font-bold uppercase leading-[0.9] tracking-tight">
-              The
-              <br />
-              Showcase
-            </span>
-          </div>
-        }
-      />
+      <div id="showcase">
+        <ScrollWarpPortal
+          voidColor="#050505"
+          accent="#c8a882"
+          scrollDistance="+=260%"
+          label={
+            <div className="flex flex-col items-center gap-4">
+              <span className="text-xs font-bold uppercase tracking-[0.4em] opacity-70">
+                Chapter 02
+              </span>
+              <span className="block text-[clamp(2.5rem,9vw,8rem)] font-bold uppercase leading-[0.9] tracking-tight">
+                The
+                <br />
+                Showcase
+              </span>
+            </div>
+          }
+        />
+      </div>
 
-      <HeroParallaxDemo />
+      <div id="projects" className="scroll-mt-0">
+        <HeroParallaxDemo />
+      </div>
 
       <ScrollMorphSection />
 
+      <div id="gallery">
       <ScrollFoldTransition
         seamColor="#c8a882"
         voidColor="#050505"
@@ -95,6 +102,7 @@ export default function Home() {
           </div>
         }
       />
+      </div>
 
       <ScrollTiltedGridDemo />
 
@@ -105,7 +113,7 @@ export default function Home() {
       <ZoomParallaxDemo />
 
       <ScrollReveal className="w-full">
-        <section className="min-h-screen w-full flex items-center justify-center bg-black px-6 py-24">
+        <section id="contact" className="min-h-screen w-full flex items-center justify-center bg-black px-6 py-24">
           <ProfileCard
             name="Rohith Pranov"
             title="Software Engineer"
@@ -121,6 +129,7 @@ export default function Home() {
             enableMobileTilt
             behindGlowEnabled
             innerGradient="linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)"
+            contactHref="https://www.linkedin.com/in/rohith-pranov/"
           />
         </section>
       </ScrollReveal>

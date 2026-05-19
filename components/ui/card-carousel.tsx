@@ -63,6 +63,23 @@ export const CardCarousel: React.FC<CarouselProps> = ({
     transform: scale(1.04);
     box-shadow: 0 24px 56px -16px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06);
   }
+
+  .swiper-pagination-bullet {
+    width: 7px;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.22);
+    opacity: 1;
+    transition: background 0.35s ease, transform 0.35s ease, width 0.35s ease, box-shadow 0.35s ease;
+    border-radius: 9999px;
+  }
+  .swiper-pagination-bullet:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .swiper-pagination-bullet-active {
+    width: 26px;
+    background: linear-gradient(90deg, #c4b5fd 0%, #a78bfa 100%);
+    box-shadow: 0 0 14px rgba(167, 139, 250, 0.55);
+  }
   `;
   return (
     <section

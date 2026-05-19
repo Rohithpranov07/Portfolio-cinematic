@@ -549,18 +549,126 @@ export const VSCodePortfolio: React.FC = () => {
                 className="flex items-center justify-center"
                 style={{ gap: "28px", marginBottom: "96px", marginTop: "8px" }}
               >
-                <ButtonCta className="min-w-[200px]">
+                <ButtonCta
+                  className="min-w-[200px]"
+                  onClick={() => {
+                    const target = document.getElementById("showcase");
+                    if (target) {
+                      const y = target.getBoundingClientRect().top + window.scrollY;
+                      window.scrollTo({ top: y, behavior: "smooth" });
+                    }
+                  }}
+                >
                   <span className="flex items-center gap-2">
                     Explore My Work <I.arrow className="w-3.5 h-3.5 text-[#D69DDE]" />
                   </span>
                 </ButtonCta>
-                <ButtonCta label="About Me" className="min-w-[200px]" />
+                <ButtonCta
+                  label="About Me"
+                  className="min-w-[200px]"
+                  onClick={() => {
+                    const target = document.getElementById("about");
+                    if (target) {
+                      const y = target.getBoundingClientRect().top + window.scrollY;
+                      window.scrollTo({ top: y, behavior: "smooth" });
+                    }
+                  }}
+                />
               </div>
 
-              {/* Scroll down */}
-              <div className="flex items-center gap-2 text-[12px] text-[#7a7a7a]">
-                Scroll Down <I.mouse className="w-3.5 h-3.5" />
+              {/* Scroll to explore cue */}
+              <div
+                className="flex flex-col items-center"
+                style={{ gap: "10px", marginTop: "-72px" }}
+              >
+                <span
+                  className="vp-scroll-shimmer"
+                  style={{
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    letterSpacing: "0.42em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Scroll to Explore
+                </span>
+                <span
+                  aria-hidden
+                  style={{
+                    position: "relative",
+                    width: "1px",
+                    height: "36px",
+                    overflow: "hidden",
+                    background: "rgba(167,139,250,0.12)",
+                  }}
+                >
+                  <span
+                    className="vp-scroll-beam"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "40%",
+                      background:
+                        "linear-gradient(180deg, transparent 0%, #a78bfa 50%, transparent 100%)",
+                    }}
+                  />
+                </span>
+                <svg
+                  aria-hidden
+                  viewBox="0 0 16 16"
+                  className="vp-scroll-chevron"
+                  style={{ width: "12px", height: "12px", color: "#c4b5fd" }}
+                >
+                  <path
+                    d="M4 6l4 4 4-4"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                  />
+                </svg>
               </div>
+
+              <style jsx>{`
+                .vp-scroll-shimmer {
+                  background: linear-gradient(
+                    90deg,
+                    rgba(167, 139, 250, 0.35) 0%,
+                    rgba(245, 240, 255, 0.95) 40%,
+                    #c4b5fd 50%,
+                    rgba(245, 240, 255, 0.95) 60%,
+                    rgba(167, 139, 250, 0.35) 100%
+                  );
+                  background-size: 220% 100%;
+                  -webkit-background-clip: text;
+                  background-clip: text;
+                  color: transparent;
+                  animation: vp-shimmer 3.6s ease-in-out infinite;
+                }
+                @keyframes vp-shimmer {
+                  0% { background-position: 200% 0; }
+                  100% { background-position: -200% 0; }
+                }
+
+                .vp-scroll-beam {
+                  animation: vp-beam 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+                }
+                @keyframes vp-beam {
+                  0% { transform: translateY(-100%); }
+                  100% { transform: translateY(250%); }
+                }
+
+                .vp-scroll-chevron {
+                  animation: vp-bounce 1.8s ease-in-out infinite;
+                }
+                @keyframes vp-bounce {
+                  0%, 100% { transform: translateY(0); opacity: 0.55; }
+                  50% { transform: translateY(3px); opacity: 1; }
+                }
+              `}</style>
             </div>
           </div>
 
@@ -574,8 +682,11 @@ export const VSCodePortfolio: React.FC = () => {
               {/* ===== Current status ===== */}
               <section>
                 <SectionLabel>CURRENT STATUS</SectionLabel>
-                <div
-                  className="group relative overflow-hidden rounded-[16px] border border-[#1a1a1a] transition-all duration-500 hover:border-[#a78bfa]/30"
+                <a
+                  href="https://www.linkedin.com/in/rohith-pranov/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative block overflow-hidden rounded-[16px] border border-[#1a1a1a] transition-all duration-500 hover:border-[#a78bfa]/30 cursor-pointer"
                   style={{
                     background: "linear-gradient(180deg, rgba(20,17,30,0.7) 0%, rgba(10,8,16,0.85) 100%)",
                     boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04), 0 12px 32px -16px rgba(0,0,0,0.6)",
@@ -610,7 +721,7 @@ export const VSCodePortfolio: React.FC = () => {
                       filter: "blur(2px)",
                     }}
                   />
-                </div>
+                </a>
               </section>
 
               {/* ===== Tech stack ===== */}

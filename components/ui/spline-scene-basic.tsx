@@ -1,33 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from "react";
 import { SplineScene } from "@/components/ui/splite";
 import { Card } from "@/components/ui/card";
 import { Spotlight } from "@/components/ui/spotlight";
 
 export function SplineSceneBasic() {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const [shouldMount, setShouldMount] = useState(false);
-
-  useEffect(() => {
-    if (!rootRef.current) return;
-    const el = rootRef.current;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setShouldMount(true);
-            io.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: 0.15 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
   return (
     <Card className="w-full h-full rounded-none border-0 bg-black/[0.96] relative overflow-hidden">
       <Spotlight
@@ -35,8 +12,8 @@ export function SplineSceneBasic() {
         fill="white"
       />
 
-      <div ref={rootRef} className="flex h-full">
-        <div className="flex-1 py-16 relative z-10 flex flex-col justify-center items-end pr-12">
+      <div className="flex h-full">
+        <div className="flex-1 py-16 relative z-10 flex flex-col justify-center items-end pr-12 pointer-events-none">
           <div className="max-w-lg w-full">
           <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
             Built Different.
@@ -50,15 +27,11 @@ Scroll down. See for yourself.
           </div>
         </div>
 
-        <div className="flex-1 relative">
-          {shouldMount ? (
-            <SplineScene
-              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="w-full h-full"
-            />
-          ) : (
-            <div className="w-full h-full" aria-hidden />
-          )}
+        <div className="flex-1 relative pointer-events-auto">
+          <SplineScene
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="w-full h-full"
+          />
         </div>
       </div>
     </Card>

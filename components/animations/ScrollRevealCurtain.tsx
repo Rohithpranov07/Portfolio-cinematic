@@ -41,89 +41,64 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
         filter: "brightness(1) blur(0px)",
       });
 
+      // Vertical wipe instead of a diagonal clip-path sweep — feels far more natural.
       gsap.set(curtainRef.current, {
-        clipPath: "polygon(100% 0, 100% 0, 100% 0, 100% 0)",
+        yPercent: 100,
+        opacity: 1,
       });
 
       gsap.set(shardRef.current, {
-        clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
-        yPercent: -100,
+        opacity: 0,
       });
 
       gsap.set(labelRef.current, {
         opacity: 0,
-        y: 80,
-        scale: 0.9,
+        y: 40,
+        scale: 0.96,
       });
 
       const tl = gsap.timeline({
-        defaults: { ease: "none" },
+        defaults: { ease: "power2.inOut" },
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
           end: scrollDistance,
-          scrub: 1.1,
+          scrub: 1.4,
           pin: stageRef.current,
           pinSpacing: true,
           anticipatePin: 1,
         },
       });
 
-      // Phase 1 (0 → 0.55): hold still — let the spline robot play its entrance
-      tl.to({}, { duration: 0.55 }, 0);
+      // Phase 1 (0 → 0.5): hold still — let the spline robot play its entrance
+      tl.to({}, { duration: 0.5 }, 0);
 
-      // Phase 2 (0.55 → 1.0): curtain transition out to next page
+      // Phase 2 (0.5 → 1.0): smooth vertical curtain rise + gentle depth fade beneath
       tl.to(
         beneathRef.current,
         {
-          rotateX: 22,
-          scale: 0.78,
-          z: -240,
-          filter: "brightness(0.4) blur(2px)",
-          duration: 0.45,
+          scale: 0.92,
+          filter: "brightness(0.5) blur(3px)",
+          duration: 0.5,
+          ease: "sine.inOut",
         },
-        0.55
+        0.5
       );
 
       tl.to(
-        shardRef.current,
+        curtainRef.current,
         {
           yPercent: 0,
-          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-          duration: 0.22,
+          duration: 0.5,
+          ease: "power2.inOut",
         },
-        0.575
-      );
-
-      tl.to(
-        curtainRef.current,
-        {
-          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-          duration: 0.32,
-        },
-        0.67
-      );
-
-      tl.fromTo(
-        curtainRef.current,
-        { clipPath: "polygon(100% 0, 100% 0, 0 100%, 0 100%)" },
-        {
-          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-          duration: 0.28,
-        },
-        0.67
+        0.5
       );
 
       tl.to(
         labelRef.current,
-        { opacity: 1, y: 0, scale: 1, duration: 0.18 },
-        0.78
-      );
-
-      tl.to(
-        shardRef.current,
-        { opacity: 0, duration: 0.1 },
-        0.93
+        { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "power2.out" },
+        0.7
       );
     }, sectionRef);
 
@@ -150,7 +125,7 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
 
         <div
           ref={shardRef}
-          className="absolute inset-0 w-full h-full will-change-transform"
+          className="pointer-events-none absolute inset-0 w-full h-full will-change-transform"
           style={{
             background: `linear-gradient(135deg, ${curtainColor} 0%, #000 100%)`,
             mixBlendMode: "screen",
@@ -159,7 +134,7 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
 
         <div
           ref={curtainRef}
-          className="absolute inset-0 w-full h-full will-change-transform flex items-center justify-center"
+          className="pointer-events-none absolute inset-0 w-full h-full will-change-transform flex items-center justify-center"
           style={{ backgroundColor: curtainColor }}
         >
           <div

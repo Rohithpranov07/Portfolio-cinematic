@@ -100,9 +100,10 @@ export function ProjectShowcase() {
 
   return (
     <section
+      id="flagship"
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full mx-auto px-8 py-24 flex flex-col items-center justify-center"
+      className="relative w-full mx-auto px-8 py-24 flex flex-col items-center justify-center scroll-mt-12"
     >
       <h2 className="text-muted-foreground text-sm font-medium tracking-[0.3em] uppercase mb-16 text-center">
         Flagship Projects

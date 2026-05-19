@@ -35,6 +35,7 @@ export interface ProfileCardProps {
   handle?: string;
   status?: string;
   contactText?: string;
+  contactHref?: string;
   showUserInfo?: boolean;
   onContactClick?: () => void;
 }
@@ -57,6 +58,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   handle = 'javicodes',
   status = 'Online',
   contactText = 'Contact',
+  contactHref,
   showUserInfo = true,
   onContactClick,
 }) => {
@@ -371,15 +373,29 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                       <div className="pc-status">{status}</div>
                     </div>
                   </div>
-                  <button
-                    className="pc-contact-btn"
-                    onClick={handleContactClick}
-                    style={{ pointerEvents: 'auto' }}
-                    type="button"
-                    aria-label={`Contact ${name || 'user'}`}
-                  >
-                    {contactText}
-                  </button>
+                  {contactHref ? (
+                    <a
+                      className="pc-contact-btn"
+                      href={contactHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleContactClick}
+                      style={{ pointerEvents: 'auto', display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}
+                      aria-label={`Contact ${name || 'user'}`}
+                    >
+                      {contactText}
+                    </a>
+                  ) : (
+                    <button
+                      className="pc-contact-btn"
+                      onClick={handleContactClick}
+                      style={{ pointerEvents: 'auto' }}
+                      type="button"
+                      aria-label={`Contact ${name || 'user'}`}
+                    >
+                      {contactText}
+                    </button>
+                  )}
                 </div>
               )}
             </div>

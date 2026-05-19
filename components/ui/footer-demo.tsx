@@ -23,12 +23,12 @@ export default function FooterDemo() {
   const socialLinks = [
     {
       icon: <LinkedinIcon className="w-6 h-6" />,
-      href: "https://linkedin.com",
+      href: "https://www.linkedin.com/in/rohith-pranov",
       label: "LinkedIn",
     },
     {
       icon: <FileText className="w-6 h-6" />,
-      href: "/",
+      href: "https://drive.google.com/file/d/1_RlWFg78dGBueOH6he9EF3ptby07ZMML/view?usp=sharing",
       label: "Resume",
     },
     {
