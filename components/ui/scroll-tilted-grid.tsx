@@ -65,6 +65,115 @@ const GAP_CLASS: Record<GapToken, string> = {
   14: "gap-14",
 };
 
+// Deterministic hash so server/client positions match (no hydration drift)
+function seeded(i: number) {
+  const x = Math.sin(i * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+type StarSpec = {
+  top: string;
+  left: string;
+  size: number;
+  delay: string;
+  duration: string;
+  color: string;
+  kind: "dot" | "sparkle";
+};
+
+const STARFIELD: StarSpec[] = Array.from({ length: 70 }, (_, i) => {
+  const r1 = seeded(i + 1);
+  const r2 = seeded(i + 101);
+  const r3 = seeded(i + 211);
+  const r4 = seeded(i + 313);
+  const r5 = seeded(i + 419);
+  const isSparkle = r5 > 0.88;
+  const rawSize = isSparkle ? 6 + r3 * 4 : 1 + r3 * 1.6;
+  const size = Number(rawSize.toFixed(2));
+  return {
+    top: `${(r1 * 100).toFixed(2)}%`,
+    left: `${(r2 * 100).toFixed(2)}%`,
+    size,
+    delay: `${(r4 * 5).toFixed(2)}s`,
+    duration: `${(2.4 + r3 * 3.6).toFixed(2)}s`,
+    color: r5 > 0.6 ? "rgba(200,168,130,0.8)" : "rgba(240,236,228,0.7)",
+    kind: isSparkle ? "sparkle" : "dot",
+  };
+});
+
+function Starfield() {
+  return (
+    <div
+      aria-hidden
+      style={{
+        position: "absolute",
+        inset: 0,
+        pointerEvents: "none",
+        overflow: "hidden",
+        zIndex: 0,
+      }}
+    >
+      {STARFIELD.map((s, i) =>
+        s.kind === "dot" ? (
+          <span
+            key={i}
+            className="stg-star-twinkle"
+            style={{
+              position: "absolute",
+              top: s.top,
+              left: s.left,
+              width: `${s.size}px`,
+              height: `${s.size}px`,
+              borderRadius: "9999px",
+              background: s.color,
+              boxShadow: `0 0 ${(s.size * 2).toFixed(2)}px ${s.color}`,
+              animationDelay: s.delay,
+              animationDuration: s.duration,
+            }}
+          />
+        ) : (
+          <svg
+            key={i}
+            className="stg-star-twinkle"
+            viewBox="0 0 12 12"
+            style={{
+              position: "absolute",
+              top: s.top,
+              left: s.left,
+              width: `${s.size}px`,
+              height: `${s.size}px`,
+              color: s.color,
+              animationDelay: s.delay,
+              animationDuration: s.duration,
+              filter: `drop-shadow(0 0 4px ${s.color})`,
+            }}
+          >
+            <path
+              d="M6 0 L6.6 5.4 L12 6 L6.6 6.6 L6 12 L5.4 6.6 L0 6 L5.4 5.4 Z"
+              fill="currentColor"
+            />
+          </svg>
+        )
+      )}
+      <style>{`
+        @keyframes stg-twinkle {
+          0%, 100% { opacity: 0.15; transform: scale(0.85); }
+          50% { opacity: 1; transform: scale(1.05); }
+        }
+        .stg-star-twinkle {
+          animation-name: stg-twinkle;
+          animation-iteration-count: infinite;
+          animation-timing-function: ease-in-out;
+          will-change: opacity, transform;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .stg-star-twinkle { animation: none; opacity: 0.5; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 type Side = "L" | "R";
 
 type TileConfig = {
@@ -241,8 +350,11 @@ export function ScrollTiltedGrid({
         marginBottom: "10vh",
       }}
     >
+      <Starfield />
       <div
         style={{
+          position: "relative",
+          zIndex: 1,
           display: "grid",
           gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
           gap: GAP_REM[gap],

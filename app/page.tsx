@@ -10,6 +10,7 @@ import HeroParallaxDemo from "@/components/ui/hero-parallax-demo";
 import ScrollMorphSection from "@/components/ui/scroll-morph-section";
 import ScrollTiltedGridDemo from "@/components/ui/scroll-tilted-grid-demo";
 import CardCarouselDemo from "@/components/ui/card-carousel-demo";
+import LightRays from "@/components/ui/LightRays";
 import ZoomParallaxDemo from "@/components/ui/zoom-parallax-demo";
 import ProfileCard from "@/components/ui/ProfileCard";
 import FooterDemo from "@/components/ui/footer-demo";
@@ -106,8 +107,44 @@ export default function Home() {
 
       <ScrollTiltedGridDemo />
 
-      <section className="min-h-screen flex items-center justify-center py-20">
-        <CardCarouselDemo />
+      <section className="relative min-h-screen flex items-center justify-center py-20 overflow-hidden">
+        {/* Premium light-rays backdrop — masked + low-saturation gold to blend with the ink palette */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 55% at 50% 40%, rgba(200,168,130,0.06) 0%, rgba(200,168,130,0.02) 40%, transparent 75%), #060606",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            maskImage:
+              "radial-gradient(ellipse 80% 70% at 50% 35%, black 30%, transparent 85%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 80% 70% at 50% 35%, black 30%, transparent 85%)",
+            opacity: 0.55,
+          }}
+        >
+          <LightRays
+            raysOrigin="top-center"
+            raysColor="#c8a882"
+            raysSpeed={0.5}
+            lightSpread={1.2}
+            rayLength={1.6}
+            fadeDistance={1.4}
+            saturation={0.45}
+            followMouse
+            mouseInfluence={0.06}
+            noiseAmount={0.06}
+            distortion={0.02}
+          />
+        </div>
+        <div className="relative z-10 w-full">
+          <CardCarouselDemo />
+        </div>
       </section>
 
       <ZoomParallaxDemo />
