@@ -8,15 +8,15 @@ import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 
 const rulerItems: CarouselItem[] = [
-  { id: 1, title: "NIKE" },
-  { id: 2, title: "ALO" },
-  { id: 3, title: "CONVERSE" },
-  { id: 4, title: "UNIQLO" },
-  { id: 5, title: "ON CLOUD" },
-  { id: 6, title: "SKIMS" },
-  { id: 7, title: "ADIDAS" },
-  { id: 8, title: "PUMA" },
-  { id: 9, title: "REEBOK" },
+  { id: 1, title: "ENGINEER" },
+  { id: 2, title: "DESIGNER" },
+  { id: 3, title: "BUILDER" },
+  { id: 4, title: "INNOVATOR" },
+  { id: 5, title: "DEVELOPER" },
+  { id: 6, title: "CREATOR" },
+  { id: 7, title: "THINKER" },
+  { id: 8, title: "SHIPPER" },
+  { id: 9, title: "PROBLEM-SOLVER" },
 ];
 
 export default function ZoomParallaxDemo() {

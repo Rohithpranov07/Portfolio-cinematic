@@ -774,6 +774,21 @@ export const VSCodePortfolio: React.FC = () => {
                             background: "linear-gradient(180deg, rgba(22,18,34,0.95) 0%, rgba(10,8,16,0.98) 100%)",
                             border: "1px solid rgba(167,139,250,0.10)",
                             boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05), 0 24px 48px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(167,139,250,0.04)",
+                            transition: "border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = "rgba(167,139,250,0.42)";
+                            e.currentTarget.style.boxShadow =
+                              "inset 0 1px 0 rgba(255,255,255,0.08), 0 30px 64px -16px rgba(0,0,0,0.85), 0 0 0 1px rgba(167,139,250,0.18), 0 0 40px -10px rgba(167,139,250,0.35)";
+                            e.currentTarget.style.background =
+                              "linear-gradient(180deg, rgba(30,24,48,0.97) 0%, rgba(14,11,24,0.99) 100%)";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = "rgba(167,139,250,0.10)";
+                            e.currentTarget.style.boxShadow =
+                              "inset 0 1px 0 rgba(255,255,255,0.05), 0 24px 48px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(167,139,250,0.04)";
+                            e.currentTarget.style.background =
+                              "linear-gradient(180deg, rgba(22,18,34,0.95) 0%, rgba(10,8,16,0.98) 100%)";
                           }}
                         >
                           {/* Hero artwork */}
@@ -789,7 +804,7 @@ export const VSCodePortfolio: React.FC = () => {
                                 height={120}
                                 loading="eager"
                                 decoding="async"
-                                className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+                                className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.08]"
                                 style={{ objectPosition: "center top" }}
                                 draggable={false}
                               />
@@ -803,17 +818,28 @@ export const VSCodePortfolio: React.FC = () => {
                               style={{ background: "radial-gradient(60% 100% at 50% 0%, rgba(167,139,250,0.4), transparent 70%)" }}
                             />
                             <span
-                              className="absolute top-3 left-3 text-[9px] font-mono tracking-[0.14em] text-white/85 backdrop-blur-sm rounded-full px-2 py-[3px] uppercase"
-                              style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.12)" }}
+                              className="absolute top-4 left-4 text-[9.5px] font-mono tracking-[0.18em] text-white/90 backdrop-blur-md rounded-full uppercase"
+                              style={{
+                                background: "rgba(0,0,0,0.5)",
+                                border: "1px solid rgba(255,255,255,0.14)",
+                                padding: "6px 12px",
+                                letterSpacing: "0.18em",
+                              }}
                             >
                               {p.tag}
                             </span>
                             {p.featured && (
                               <span
-                                className="absolute top-3 right-3 text-[9px] font-mono tracking-[0.14em] text-[#c4b5fd] backdrop-blur-sm rounded-full px-2 py-[3px]"
-                                style={{ background: "rgba(31,18,48,0.7)", border: "1px solid rgba(167,139,250,0.35)" }}
+                                className="absolute top-4 right-4 text-[9.5px] font-mono tracking-[0.18em] text-[#d8c9ff] backdrop-blur-md rounded-full"
+                                style={{
+                                  background:
+                                    "linear-gradient(180deg, rgba(58,38,108,0.85) 0%, rgba(31,18,58,0.85) 100%)",
+                                  border: "1px solid rgba(167,139,250,0.4)",
+                                  padding: "6px 12px",
+                                  letterSpacing: "0.18em",
+                                }}
                               >
-                                FEATURED
+                                ★ FEATURED
                               </span>
                             )}
                           </div>

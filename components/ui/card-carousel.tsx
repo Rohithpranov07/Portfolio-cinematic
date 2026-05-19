@@ -19,7 +19,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 interface CarouselProps {
-  images: { src: string; alt: string }[];
+  images: { src: string; alt: string; objectPosition?: string; link?: string }[];
   autoplayDelay?: number;
   showPagination?: boolean;
   showNavigation?: boolean;
@@ -53,6 +53,15 @@ export const CardCarousel: React.FC<CarouselProps> = ({
   }
   .swiper-3d .swiper-slide-shadow-right{
     background: none;
+  }
+
+  .cc-card {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    will-change: transform;
+  }
+  .cc-card:hover {
+    transform: scale(1.04);
+    box-shadow: 0 24px 56px -16px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06);
   }
   `;
   return (
@@ -142,32 +151,46 @@ with purpose, precision, and personality.
                 }
                 modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
               >
-                {images.map((image, index) => (
-                  <SwiperSlide key={`a-${index}`}>
-                    <div className="size-full rounded-3xl">
+                {images.map((image, index) => {
+                  const inner = (
+                    <div
+                      className="rounded-3xl overflow-hidden cc-card"
+                      style={{ width: "320px", height: "480px", flexShrink: 0 }}
+                    >
                       <Image
                         src={image.src}
                         width={500}
-                        height={500}
-                        className="size-full rounded-xl"
+                        height={750}
+                        className="rounded-xl"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          objectPosition: image.objectPosition ?? "center",
+                          transform: image.src.includes("Shopsmart") ? "scale(1.05)" : undefined,
+                          transformOrigin: "center",
+                        }}
                         alt={image.alt}
                       />
                     </div>
-                  </SwiperSlide>
-                ))}
-                {images.map((image, index) => (
-                  <SwiperSlide key={`b-${index}`}>
-                    <div className="size-full rounded-3xl">
-                      <Image
-                        src={image.src}
-                        width={200}
-                        height={200}
-                        className="size-full rounded-xl"
-                        alt={image.alt}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
+                  );
+                  return (
+                    <SwiperSlide key={`a-${index}`}>
+                      {image.link ? (
+                        <a
+                          href={image.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ display: "block", cursor: "pointer" }}
+                        >
+                          {inner}
+                        </a>
+                      ) : (
+                        inner
+                      )}
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </div>
           </div>
