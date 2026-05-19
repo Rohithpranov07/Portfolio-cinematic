@@ -8,6 +8,7 @@ import { ButtonCta } from "@/components/ui/button-shiny";
 import LogoLoop from "@/components/ui/logo-loop";
 import ScrollStack, { ScrollStackItem } from "@/components/ui/scroll-stack";
 import TextType from "@/components/ui/text-type";
+import { ProjectModal, type Project } from "@/components/ui/project-modal";
 
 /* ---------- Tiny icon set (inline SVG) ---------- */
 const I = {
@@ -297,7 +298,85 @@ const TechIcon = ({ kind }: { kind: string }) => {
 };
 
 /* ---------- Main component ---------- */
+const featuredProjects: Project[] = [
+  {
+    title: "ProofStack",
+    year: "2025",
+    tag: "Product",
+    featured: true,
+    desc: "Multi-signal developer trust platform that cross-validates resumes against GitHub forensics and LeetCode behavioral data to deliver a single PST Trust Score in under 30 seconds.",
+    stack: ["FastAPI", "Next.js", "PostgreSQL"],
+    artwork: "linear-gradient(180deg, #1e1b4b 0%, #5b21b6 50%, #ec4899 100%)",
+    image: "/Proofstack-1.png",
+    overview:
+      "ProofStack is a multi-signal developer trust platform built to end resume guesswork. It cross-references GitHub commit forensics, LeetCode behavioral patterns, and StackOverflow contributions through a 10-engine algorithmic verification pipeline — producing a single PST Trust Score backed by Shannon entropy, z-score anomaly detection, and pattern analysis. Decisions in under 30 seconds, math instead of gut feel.",
+    features: [
+      "10-engine algorithmic verification pipeline",
+      "GitHub commit forensics & anomaly detection",
+      "LeetCode behavioral pattern analysis",
+      "Shannon entropy + z-score scoring",
+      "Sub-30 second trust score generation",
+      "Recruiter-ready candidate reports",
+    ],
+    links: {
+      github: "https://github.com/Rohithpranov07/ProofStack.git",
+      linkedin: "https://www.linkedin.com/in/rohith-pranov/",
+    },
+  },
+  {
+    title: "KodaiRateIQ",
+    year: "2025",
+    tag: "Product",
+    featured: true,
+    desc: "AI-powered hotel rate intelligence platform that monitors competitor pricing across OTAs and delivers Gemini-generated pricing strategies through a Bloomberg-inspired dashboard.",
+    stack: ["Next.js", "PostgreSQL", "MiMO AI"],
+    artwork: "linear-gradient(180deg, #0c1e3e 0%, #1e3a8a 45%, #7c3aed 100%)",
+    image: "/KodairateIQ.png",
+    overview:
+      "KodaiRateIQ is a hotel rate-intelligence platform that watches competitor pricing across OTAs in real time and translates the signal into action. A Bloomberg-inspired dashboard surfaces rate movements, demand windows, and anomaly alerts — while Gemini-generated strategies tell revenue managers exactly when to flex price and why.",
+    features: [
+      "Real-time multi-OTA rate scraping",
+      "Gemini-driven pricing recommendations",
+      "Bloomberg-style terminal dashboard",
+      "Competitor benchmarking & alerts",
+      "Demand-forecast visualizations",
+      "Revenue strategy export to PDF",
+    ],
+    links: {
+      github: "https://github.com/Rohithpranov07/KodaiRateIQ.git",
+      linkedin: "https://www.linkedin.com/in/rohith-pranov/",
+      live: "https://kodai-rate-iq.vercel.app/",
+    },
+  },
+  {
+    title: "CyberShield India",
+    year: "2025",
+    tag: "Open Source",
+    featured: true,
+    desc: "Law-enforcement-grade digital forensics platform that detects AI-generated media, traces digital footprints, and anchors tamper-proof evidence on the Polygon blockchain.",
+    stack: ["FastAPI", "React", "Blockchain"],
+    artwork: "linear-gradient(180deg, #042f2e 0%, #134e4a 40%, #7c3aed 100%)",
+    image: "/cybershield-1.png",
+    overview:
+      "CyberShield India is a law-enforcement-grade digital forensics platform that detects AI-generated media, traces digital footprints across surfaces, and anchors tamper-proof evidence hashes onto the Polygon blockchain. Built for investigators who need their findings to hold up in a courtroom — chain of custody, audit trail, and cryptographic proof, all baked in.",
+    features: [
+      "Deepfake & AI-generated media detection",
+      "Cross-platform digital footprint tracing",
+      "Polygon blockchain evidence anchoring",
+      "Chain-of-custody audit logs",
+      "Cryptographic tamper-proofing",
+      "Investigator-grade case dashboard",
+    ],
+    links: {
+      github: "https://github.com/Rohithpranov07/cybershield-india.git",
+      linkedin:
+        "https://www.linkedin.com/posts/rohith-pranov_artificialintelligence-blockchain-cybersecurity-activity-7429836126657507329-Qp0L",
+    },
+  },
+];
+
 export const VSCodePortfolio: React.FC = () => {
+  const [activeProject, setActiveProject] = React.useState<Project | null>(null);
   return (
     <div className="w-full h-full bg-[#0a0a0a] text-[#cccccc] flex flex-col overflow-hidden rounded-[6px]"
       style={{ fontFamily: "'SF Pro Text', -apple-system, system-ui, sans-serif", fontSize: 12 }}>
@@ -678,40 +757,18 @@ export const VSCodePortfolio: React.FC = () => {
                     baseScale={0.94}
                     blurAmount={1.2}
                   >
-                    {([
-                      {
-                        title: "Aurora Studio",
-                        year: "2025",
-                        tag: "Case Study",
-                        featured: true,
-                        desc: "Creative agency site with smooth scroll, immersive UI, and cinematic transitions.",
-                        stack: ["Next.js", "GSAP", "R3F"],
-                        artwork: "linear-gradient(180deg, #1e1b4b 0%, #5b21b6 50%, #ec4899 100%)",
-                        mountains: true,
-                      },
-                      {
-                        title: "Nebula OS",
-                        year: "2024",
-                        tag: "Product",
-                        featured: false,
-                        desc: "Real-time collaboration platform with a custom WebGL canvas engine.",
-                        stack: ["TypeScript", "WebGL", "Rust"],
-                        artwork: "linear-gradient(180deg, #0c1e3e 0%, #1e3a8a 45%, #7c3aed 100%)",
-                        mountains: false,
-                      },
-                      {
-                        title: "Solstice CMS",
-                        year: "2024",
-                        tag: "Open Source",
-                        featured: false,
-                        desc: "A type-safe, headless CMS for design-led teams. Prisma + tRPC under the hood.",
-                        stack: ["Next.js", "Prisma", "tRPC"],
-                        artwork: "linear-gradient(180deg, #042f2e 0%, #134e4a 40%, #7c3aed 100%)",
-                        mountains: false,
-                      },
-                    ]).map((p) => (
-                      <ScrollStackItem key={p.title}>
+                    {featuredProjects.map((p, i) => (
+                      <ScrollStackItem key={i}>
                         <div
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => setActiveProject(p)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              setActiveProject(p);
+                            }
+                          }}
                           className="group relative overflow-hidden rounded-[18px] cursor-pointer"
                           style={{
                             background: "linear-gradient(180deg, rgba(22,18,34,0.95) 0%, rgba(10,8,16,0.98) 100%)",
@@ -724,19 +781,23 @@ export const VSCodePortfolio: React.FC = () => {
                             className="relative h-[120px] overflow-hidden"
                             style={{ background: p.artwork }}
                           >
-                            <div
-                              className="absolute inset-0"
-                              style={{ background: "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.35), transparent 55%)" }}
-                            />
-                            {p.mountains && (
-                              <div
-                                className="absolute bottom-0 left-0 right-0 h-2/3"
-                                style={{
-                                  background: "linear-gradient(180deg, transparent, #0a0814 90%)",
-                                  clipPath: "polygon(0 65%, 15% 45%, 30% 60%, 45% 38%, 60% 55%, 75% 32%, 90% 50%, 100% 40%, 100% 100%, 0 100%)",
-                                }}
+                            {p.image && (
+                              <img
+                                src={p.image}
+                                alt={p.title}
+                                width={820}
+                                height={120}
+                                loading="eager"
+                                decoding="async"
+                                className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+                                style={{ objectPosition: "center top" }}
+                                draggable={false}
                               />
                             )}
+                            <div
+                              className="absolute inset-0"
+                              style={{ background: "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.35), transparent 55%)", opacity: p.image ? 0 : 1 }}
+                            />
                             <div
                               className="absolute inset-x-0 top-0 h-1/2 mix-blend-screen opacity-75"
                               style={{ background: "radial-gradient(60% 100% at 50% 0%, rgba(167,139,250,0.4), transparent 70%)" }}
@@ -877,6 +938,8 @@ export const VSCodePortfolio: React.FC = () => {
           <span className="flex items-center gap-1 text-[#a78bfa]">⚡ Prettier</span>
         </div>
       </div>
+
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </div>
   );
 };

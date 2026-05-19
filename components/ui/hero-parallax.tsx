@@ -17,11 +17,12 @@ export const HeroParallax = ({
     title: string;
     link: string;
     thumbnail: string;
+    objectPosition?: string;
   }[];
 }) => {
-  const firstRow = products.slice(0, 5);
-  const secondRow = products.slice(5, 10);
-  const thirdRow = products.slice(10, 15);
+  const firstRow = products.slice(0, 4);
+  const secondRow = products.slice(4, 8);
+  const thirdRow = products.slice(8, 12);
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -69,30 +70,39 @@ export const HeroParallax = ({
         }}
         className=""
       >
-        <motion.div className="flex flex-row-reverse mb-16 gap-15">
-          {firstRow.map((product) => (
+        <motion.div
+          className="flex flex-row-reverse"
+          style={{ gap: "72px", marginBottom: "88px" }}
+        >
+          {[...firstRow, ...firstRow].map((product, i) => (
             <ProductCard
               product={product}
               translate={translateX}
-              key={product.title}
+              key={`first-${i}`}
             />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row mb-16 gap-15">
-          {secondRow.map((product) => (
+        <motion.div
+          className="flex flex-row"
+          style={{ gap: "72px", marginBottom: "88px" }}
+        >
+          {[...secondRow, ...secondRow].map((product, i) => (
             <ProductCard
               product={product}
               translate={translateXReverse}
-              key={product.title}
+              key={`second-${i}`}
             />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row-reverse gap-15">
-          {thirdRow.map((product) => (
+        <motion.div
+          className="flex flex-row-reverse"
+          style={{ gap: "72px" }}
+        >
+          {[...thirdRow, ...thirdRow].map((product, i) => (
             <ProductCard
               product={product}
               translate={translateX}
-              key={product.title}
+              key={`third-${i}`}
             />
           ))}
         </motion.div>
@@ -206,6 +216,7 @@ export const ProductCard = ({
     title: string;
     link: string;
     thumbnail: string;
+    objectPosition?: string;
   };
   translate: MotionValue<number>;
 }) => {
@@ -213,27 +224,51 @@ export const ProductCard = ({
     <motion.div
       style={{
         x: translate,
+        boxShadow:
+          "0 30px 80px -30px rgba(0,0,0,0.7), 0 0 0 1px rgba(167,139,250,0.10), inset 0 1px 0 rgba(255,255,255,0.06)",
       }}
       whileHover={{
         y: -20,
       }}
       key={product.title}
-      className="group/product h-96 w-[30rem] relative flex-shrink-0 overflow-hidden rounded-3xl"
+      className="group/product h-80 w-[22rem] relative flex-shrink-0 overflow-hidden rounded-[24px]"
     >
       <Link
         href={product.link}
-        className="block group-hover/product:shadow-2xl rounded-3xl overflow-hidden"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block group-hover/product:shadow-2xl rounded-[28px] overflow-hidden"
       >
         <Image
           src={product.thumbnail}
           height="600"
           width="600"
-          className="object-cover object-left-top absolute h-full w-full inset-0 rounded-3xl"
+          className="object-cover absolute h-full w-full inset-0 rounded-[28px]"
+          style={{ objectPosition: product.objectPosition ?? "center" }}
           alt={product.title}
         />
       </Link>
-      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none rounded-3xl"></div>
-      <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
+      {/* Subtle inner sheen — adds a quiet premium gloss without changing animation */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none rounded-[28px]"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.35) 100%)",
+        }}
+      />
+      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none rounded-[28px]"></div>
+      <h2
+        className="absolute opacity-0 group-hover/product:opacity-100 text-white"
+        style={{
+          left: "20px",
+          bottom: "18px",
+          fontSize: "15px",
+          fontWeight: 600,
+          letterSpacing: "0.04em",
+          textShadow: "0 2px 12px rgba(0,0,0,0.6)",
+        }}
+      >
         {product.title}
       </h2>
     </motion.div>

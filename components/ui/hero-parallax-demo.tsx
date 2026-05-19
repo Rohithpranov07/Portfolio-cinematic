@@ -7,79 +7,75 @@ export default function HeroParallaxDemo() {
 }
 export const products = [
   {
-    title: "Moonbeam",
-    link: "https://gomoonbeam.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/moonbeam.png",
+    title: "KodaiRateIQ",
+    link: "https://kodai-rate-iq.vercel.app/",
+    thumbnail: "/KodairateIQ.png",
   },
   {
-    title: "Cursor",
-    link: "https://cursor.so",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cursor.png",
+    title: "ProofStack",
+    link: "https://github.com/Rohithpranov07/ProofStack.git",
+    thumbnail: "/Proofstack-1.png",
+    objectPosition: "left top",
   },
   {
-    title: "Rogue",
-    link: "https://userogue.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/rogue.png",
-  },
-
-  {
-    title: "Editorially",
-    link: "https://editorially.org",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/editorially.png",
-  },
-  {
-    title: "Editrix AI",
-    link: "https://editrix.ai",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/editrix.png",
-  },
-  {
-    title: "Pixel Perfect",
-    link: "https://app.pixelperfect.quest",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/pixelperfect.png",
+    title: "CyberShield India",
+    link: "https://github.com/Rohithpranov07/cybershield-india.git",
+    thumbnail: "/cybershield-1.png",
+    objectPosition: "left top",
   },
 
   {
-    title: "Algochurn",
-    link: "https://algochurn.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/algochurn.png",
+    title: "Old Portfolio",
+    link: "https://portfolio-wheat-zeta-18.vercel.app",
+    thumbnail: "/oldportfolio-1.png",
+    objectPosition: "left top",
   },
   {
-    title: "Aceternity UI",
-    link: "https://ui.aceternity.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/aceternityui.png",
+    title: "Ridershield",
+    link: "https://github.com/Rohithpranov07/RIDERSHIELD_AI.git",
+    thumbnail: "/Ridershield-1.jpeg",
+    objectPosition: "center top",
   },
   {
-    title: "Tailwind Master Kit",
-    link: "https://tailwindmasterkit.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/tailwindmasterkit.png",
-  },
-  {
-    title: "SmartBridge",
-    link: "https://smartbridgetech.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/smartbridge.png",
-  },
-  {
-    title: "Renderwork Studio",
-    link: "https://renderwork.studio",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/renderwork.png",
+    title: "Quiz Website",
+    link: "https://iac-quiz-website.vercel.app",
+    thumbnail: "/Quizwebsite-1.png",
+    objectPosition: "left top",
   },
 
   {
-    title: "Creme Digital",
-    link: "https://cremedigital.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cremedigital.png",
+    title: "RiderShieldPlan",
+    link: "https://rider-shield-plan.vercel.app",
+    thumbnail: "/Ridershieldplan-1.png",
+  },
+  {
+    title: "Cinematch",
+    link: "https://cine-match-h8u71tvrb-dharsanhunts-projects.vercel.app/",
+    thumbnail: "/Cinematch-1.png",
+  },
+  {
+    title: "WeatherApp",
+    link: "https://ambientweatherapp.netlify.app",
+    thumbnail: "/weatherapp-1.png",
+    objectPosition: "left top",
+  },
+  {
+    title: "Gas Safety Dashboard",
+    link: "https://github.com/DharsanHunt/gas-safety-dashboard.git",
+    thumbnail: "/safetydashboard-1.png",
+    objectPosition: "left top",
+  },
+  {
+    title: "Sentinel",
+    link: "https://github.com/Rohithpranov07/Sentinel.git",
+    thumbnail: "/sentinal-1.png",
+    objectPosition: "left top",
+  },
+
+  {
+    title: "Sentry",
+    link: "https://github.com/Rohithpranov07/sentryx.git",
+    thumbnail: "/Sentryx-1.png",
   },
   {
     title: "Golden Bells Academy",
