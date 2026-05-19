@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { FileTree, type FileNode } from "@/components/ui/file-tree";
 import { SpotlightSearch } from "@/components/ui/apple-spotlight";
 import MacOSMenuBar from "@/components/ui/mac-os-menu-bar";
@@ -908,13 +909,12 @@ export const VSCodePortfolio: React.FC = () => {
                             style={{ background: p.artwork }}
                           >
                             {p.image && (
-                              <img
+                              <Image
                                 src={p.image}
                                 alt={p.title}
-                                width={820}
-                                height={120}
-                                loading="eager"
-                                decoding="async"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 820px"
+                                loading="lazy"
                                 className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.08]"
                                 style={{ objectPosition: "center top" }}
                                 draggable={false}

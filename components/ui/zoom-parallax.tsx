@@ -1,15 +1,16 @@
 "use client";
 
 import { useScroll, useTransform, motion } from "framer-motion";
+import NextImage from "next/image";
 import { useRef } from "react";
 
-interface Image {
+interface ParallaxImage {
   src: string;
   alt?: string;
 }
 
 interface ZoomParallaxProps {
-  images: Image[];
+  images: ParallaxImage[];
   /** Optional node rendered inside one frame instead of an image — acts as a portal/preview */
   portalContent?: React.ReactNode;
   /** Which image index to replace with portalContent (default 0 — centered frame) */
@@ -66,10 +67,12 @@ export function ZoomParallax({ images, portalContent, portalIndex = 0 }: ZoomPar
                     </div>
                   </div>
                 ) : (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <NextImage
                     src={src || "/placeholder.svg"}
                     alt={alt || `Parallax image ${index + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 60vw, 25vw"
+                    loading="lazy"
                     className="h-full w-full object-cover"
                     style={{
                       objectPosition: "center top",

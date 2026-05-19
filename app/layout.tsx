@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/animations/SmoothScrollProvider";
@@ -8,17 +8,20 @@ import { PageReveal } from "@/components/animations/PageTransition";
 const cormorant = Cormorant_Garamond({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["400", "500"],
+  display: "swap",
+  preload: false,
 });
 
 const dmSans = DM_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rohithpranov.vercel.app"),
   title: "Rohith Pranov — Creative Developer",
   description:
     "Portfolio of Rohith Pranov — a creative developer crafting cinematic digital experiences with Three.js, GSAP, and Next.js.",
@@ -28,6 +31,14 @@ export const metadata: Metadata = {
     description: "Crafting digital experiences that move people.",
     type: "website",
   },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#080808",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

@@ -2,6 +2,7 @@
 
 import type React from "react";
 
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 
@@ -123,11 +124,13 @@ export function ProjectShowcase() {
       >
         <div className="relative w-[280px] h-[180px] bg-secondary rounded-xl overflow-hidden">
           {projects.map((project, index) => (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
+            <Image
               key={project.title}
               src={project.image || "/placeholder.svg"}
               alt={project.title}
+              fill
+              sizes="280px"
+              loading="lazy"
               className="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-out"
               style={{
                 opacity: hoveredIndex === index ? 1 : 0,

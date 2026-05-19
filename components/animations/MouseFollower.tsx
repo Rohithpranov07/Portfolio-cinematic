@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export function MouseFollower() {
@@ -8,6 +8,7 @@ export function MouseFollower() {
   const cursorY = useMotionValue(-100);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
 
   const springConfig = { stiffness: 400, damping: 35, mass: 0.5 };
   const dotSpring = { stiffness: 600, damping: 40 };
@@ -18,35 +19,52 @@ export function MouseFollower() {
   const dotY = useSpring(cursorY, dotSpring);
 
   useEffect(() => {
+    const mql = window.matchMedia("(pointer: coarse)");
+    const update = () => setIsCoarsePointer(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (isCoarsePointer) return;
+
+    let visible = false;
+    const SELECTOR = "a, button, [data-cursor]";
+
     const move = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+      if (!visible) {
+        visible = true;
+        setIsVisible(true);
+      }
+    };
+    const onOver = (e: MouseEvent) => {
+      const target = e.target as Element | null;
+      if (target && target.closest && target.closest(SELECTOR)) {
+        setIsHovering(true);
+      }
+    };
+    const onOut = (e: MouseEvent) => {
+      const target = e.target as Element | null;
+      if (target && target.closest && target.closest(SELECTOR)) {
+        setIsHovering(false);
+      }
     };
 
-    const handleHoverIn = () => setIsHovering(true);
-    const handleHoverOut = () => setIsHovering(false);
-
-    window.addEventListener("mousemove", move);
-
-    const interactables = document.querySelectorAll("a, button, [data-cursor]");
-    interactables.forEach((el) => {
-      el.addEventListener("mouseenter", handleHoverIn);
-      el.addEventListener("mouseleave", handleHoverOut);
-    });
+    window.addEventListener("mousemove", move, { passive: true });
+    document.addEventListener("mouseover", onOver, { passive: true });
+    document.addEventListener("mouseout", onOut, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", move);
-      interactables.forEach((el) => {
-        el.removeEventListener("mouseenter", handleHoverIn);
-        el.removeEventListener("mouseleave", handleHoverOut);
-      });
+      document.removeEventListener("mouseover", onOver);
+      document.removeEventListener("mouseout", onOut);
     };
-  }, [isVisible]);
+  }, [isCoarsePointer, cursorX, cursorY]);
 
-  if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
-    return null;
-  }
+  if (isCoarsePointer) return null;
 
   return (
     <>

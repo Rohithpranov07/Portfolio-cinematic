@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Lenis from "lenis";
 import { gsap } from "@/lib/gsap";
 import { ScrollTrigger } from "@/lib/gsap";
@@ -12,8 +12,6 @@ export function getLenis() {
 }
 
 export function useLenis() {
-  const rafRef = useRef<number>(0);
-
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -25,22 +23,19 @@ export function useLenis() {
     });
 
     lenisInstance = lenis;
-
     lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    const tick = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
 
+    gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      gsap.ticker.remove(tick);
       lenis.destroy();
       lenisInstance = null;
-      gsap.ticker.remove((time) => {
-        lenis.raf(time * 1000);
-      });
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 }
