@@ -66,7 +66,14 @@ function FlipCard({
                         src={src}
                         alt={`hero-${index}`}
                         fill
-                        sizes="60px"
+                        // Card box is 60 px, but during the bottom-strip arc
+                        // Framer Motion scales it up to 1.8× (1.4× on mobile),
+                        // so the on-screen footprint reaches ~108 px CSS / 216 px
+                        // physical on a retina display. Asking the optimizer for
+                        // a 256-wide source covers DPR 3 at peak scale without
+                        // wasting bytes on the tiny scatter phase.
+                        sizes="256px"
+                        quality={85}
                         loading="lazy"
                         className="h-full w-full object-cover"
                         style={{ objectPosition: objectPosition ?? "center" }}

@@ -30,6 +30,10 @@ export function MouseFollower() {
     if (isCoarsePointer) return;
 
     let visible = false;
+    let hovering = false;
+    let lastHoverTarget: Element | null = null;
+    let rafId: number | null = null;
+    let pendingTarget: Element | null = null;
     const SELECTOR = "a, button, [data-cursor]";
 
     const move = (e: MouseEvent) => {
@@ -40,27 +44,52 @@ export function MouseFollower() {
         setIsVisible(true);
       }
     };
-    const onOver = (e: MouseEvent) => {
-      const target = e.target as Element | null;
-      if (target && target.closest && target.closest(SELECTOR)) {
-        setIsHovering(true);
+
+    // RAF-coalesce hover checks: `mouseover` bubbles for every nested element
+    // the pointer transitions across, which on a dense scroll-driven page can
+    // fire 100+ times/sec. We only need the result once per frame.
+    const flushHover = () => {
+      rafId = null;
+      const target = pendingTarget;
+      if (target === lastHoverTarget) return;
+      lastHoverTarget = target;
+      const next = !!(target && target.closest && target.closest(SELECTOR));
+      if (next !== hovering) {
+        hovering = next;
+        setIsHovering(next);
       }
     };
-    const onOut = (e: MouseEvent) => {
-      const target = e.target as Element | null;
-      if (target && target.closest && target.closest(SELECTOR)) {
+
+    const schedule = (target: Element | null) => {
+      pendingTarget = target;
+      if (rafId == null) rafId = requestAnimationFrame(flushHover);
+    };
+
+    const onOver = (e: MouseEvent) => schedule(e.target as Element | null);
+    // mouseleave from the window should clear hover; we don't need to inspect
+    // the related target because mouseover will fire again on re-entry.
+    const onMouseLeave = () => {
+      if (hovering) {
+        hovering = false;
         setIsHovering(false);
       }
+      lastHoverTarget = null;
     };
 
     window.addEventListener("mousemove", move, { passive: true });
     document.addEventListener("mouseover", onOver, { passive: true });
-    document.addEventListener("mouseout", onOut, { passive: true });
+    document.documentElement.addEventListener("mouseleave", onMouseLeave, {
+      passive: true,
+    });
 
     return () => {
+      if (rafId != null) cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove", move);
       document.removeEventListener("mouseover", onOver);
-      document.removeEventListener("mouseout", onOut);
+      document.documentElement.removeEventListener(
+        "mouseleave",
+        onMouseLeave
+      );
     };
   }, [isCoarsePointer, cursorX, cursorY]);
 

@@ -4,6 +4,7 @@ import "./globals.css";
 import { SmoothScrollProvider } from "@/components/animations/SmoothScrollProvider";
 import { MouseFollower } from "@/components/animations/MouseFollower";
 import { PageReveal } from "@/components/animations/PageTransition";
+import { AssetPreloader } from "@/components/animations/AssetPreloader";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-display",
@@ -58,6 +59,7 @@ export default function RootLayout({
       >
         <div className="noise-overlay" aria-hidden="true" />
         <PageReveal />
+        <AssetPreloader />
         <SmoothScrollProvider>
           <MouseFollower />
           {children}

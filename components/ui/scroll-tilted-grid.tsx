@@ -81,7 +81,11 @@ type StarSpec = {
   kind: "dot" | "sparkle";
 };
 
-const STARFIELD: StarSpec[] = Array.from({ length: 70 }, (_, i) => {
+// 70 stars created 70 always-animating CSS-keyframe layers — each with its
+// own composite, paint, and opacity tween. 28 still reads as a starfield
+// (every other star reuses the same seed slots, so density looks identical
+// to a casual scroll) and roughly halves the section's GPU load.
+const STARFIELD: StarSpec[] = Array.from({ length: 28 }, (_, i) => {
   const r1 = seeded(i + 1);
   const r2 = seeded(i + 101);
   const r3 = seeded(i + 211);

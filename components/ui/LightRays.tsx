@@ -126,8 +126,11 @@ const LightRays = ({
       await new Promise((resolve) => setTimeout(resolve, 10));
       if (!containerRef.current) return;
 
+      // Cap DPR at 1.5 — on retina screens (DPR 2-3) the fragment shader runs
+      // at 4-9x the pixel count for a backdrop the eye reads as a soft gold
+      // wash. 1.5 keeps the gradient indistinguishable and halves shader cost.
       const renderer = new Renderer({
-        dpr: Math.min(window.devicePixelRatio, 2),
+        dpr: Math.min(window.devicePixelRatio, 1.5),
         alpha: true,
       });
       rendererRef.current = renderer;
@@ -276,7 +279,7 @@ void main() {
 
       const updatePlacement = () => {
         if (!containerRef.current || !renderer) return;
-        renderer.dpr = Math.min(window.devicePixelRatio, 2);
+        renderer.dpr = Math.min(window.devicePixelRatio, 1.5);
         const { clientWidth: wCSS, clientHeight: hCSS } = containerRef.current;
         renderer.setSize(wCSS, hCSS);
         const dpr = renderer.dpr;
@@ -288,10 +291,29 @@ void main() {
         uniforms.rayDir.value = dir;
       };
 
+      // Throttle render to ~30 fps. The rays animate slowly (raysSpeed 0.5
+      // in this app) so the eye cannot tell 30 fps from 60. Halving the
+      // fragment-shader frequency roughly halves the GPU cost.
+      const TARGET_FRAME_MS = 1000 / 30;
+      let lastDraw = 0;
+
       const loop = (t: number) => {
         if (!rendererRef.current || !uniformsRef.current || !meshRef.current) {
           return;
         }
+
+        // Skip the entire frame if the tab is hidden — no point burning GPU
+        // for an offscreen canvas.
+        if (typeof document !== "undefined" && document.hidden) {
+          animationIdRef.current = requestAnimationFrame(loop);
+          return;
+        }
+
+        if (t - lastDraw < TARGET_FRAME_MS) {
+          animationIdRef.current = requestAnimationFrame(loop);
+          return;
+        }
+        lastDraw = t;
         uniforms.iTime.value = t * 0.001;
 
         if (followMouse && mouseInfluence > 0.0) {

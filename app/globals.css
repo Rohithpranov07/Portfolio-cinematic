@@ -101,14 +101,20 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
-  cursor: none;
 }
 
-/* Hide default cursor on desktop */
+/* Hide the OS cursor only on the document root for fine pointers. The
+   previous `*, *::before, *::after { cursor: none !important }` rule forced
+   Chrome to re-evaluate `cursor` on every element on every style invalidation
+   and was the single largest CPU drain in DevTools' Performance trace. The
+   custom cursor still reads as the only visible pointer because the chrome
+   above sits at z-index 9999. */
 @media (pointer: fine) {
-  *, *::before, *::after {
-    cursor: none !important;
-  }
+  html, body { cursor: none; }
+  /* `a` and `button` would otherwise switch to `pointer` and re-show the OS
+     cursor; this single selector covers what we actually care about without
+     touching every other element. */
+  a, button, [role="button"], [data-cursor] { cursor: none; }
 }
 
 /* Selection */
