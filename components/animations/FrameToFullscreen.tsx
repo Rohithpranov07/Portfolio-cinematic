@@ -38,41 +38,41 @@ export const FrameToFullscreen: React.FC<Props> = ({ titleComponent, children })
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=420%",
-          scrub: 1.2,
+          end: "+=240%",
+          scrub: 1.2, // Silk smooth scrub damping
           pin: stageRef.current,
           pinSpacing: true,
           anticipatePin: 1,
         },
       });
 
-      // Phase 1 (0 → 0.3): "Goes here" reveals; frame eases up & untilts slightly
+      // Phase 1 (0 → 0.5): "Goes here" reveals; frame eases up & untilts slightly
       tl.to(
         frameRef.current,
         {
           rotateX: 15,
           scale: 0.93,
           y: 20,
-          duration: 0.3,
+          duration: 0.5,
           ease: "power1.out",
+          force3D: true,
         },
         0
       );
 
-      // Phase 2 (0.3 → 0.45): title fades out smoothly (completes before frame rises)
+      // Phase 2 (0.5 → 0.7): title fades out smoothly (completes before frame rises)
       tl.to(
         titleRef.current,
         {
           y: -60,
           opacity: 0,
-          filter: "blur(6px)",
-          duration: 0.15,
+          duration: 0.2,
           ease: "sine.inOut",
         },
-        0.3
+        0.5
       );
 
-      // Phase 3 (0.45 → 0.6): frame flattens up to fullscreen
+      // Phase 3 (0.7 → 1.0): frame flattens up to fullscreen — ends precisely as the pin releases
       tl.to(
         frameRef.current,
         {
@@ -84,20 +84,18 @@ export const FrameToFullscreen: React.FC<Props> = ({ titleComponent, children })
           borderRadius: 0,
           borderWidth: 0,
           padding: 0,
-          duration: 0.15,
+          duration: 0.3,
           ease: "power3.inOut",
+          force3D: true,
         },
-        0.45
+        0.7
       );
 
       tl.to(
         innerRef.current,
-        { borderRadius: 0, duration: 0.15, ease: "power3.inOut" },
-        0.45
+        { borderRadius: 0, duration: 0.3, ease: "power3.inOut", force3D: true },
+        0.7
       );
-
-      // Phase 4 (0.6 → 1.0): hold fullscreen still — extends scroll without further motion
-      tl.to({}, { duration: 0.4 }, 0.6);
     }, sectionRef);
 
     return () => ctx.revert();
@@ -108,12 +106,16 @@ export const FrameToFullscreen: React.FC<Props> = ({ titleComponent, children })
       <section
         ref={sectionRef}
         className="relative w-full"
-        style={{ height: "520vh" }}
+        style={{ height: "340vh" }}
       >
         <div
           ref={stageRef}
           className="relative w-full h-screen overflow-hidden flex items-end justify-center pb-[6vh]"
-          style={{ perspective: "1600px" }}
+          style={{
+            perspective: "1600px",
+            willChange: "transform",
+            transformStyle: "preserve-3d",
+          }}
         >
           {titleComponent && (
             <div
@@ -136,12 +138,21 @@ export const FrameToFullscreen: React.FC<Props> = ({ titleComponent, children })
               padding: 16,
               boxShadow:
                 "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a",
+              willChange: "transform, width, height, padding, borderRadius",
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              transformStyle: "preserve-3d",
             }}
           >
             <div
               ref={innerRef}
               className="relative w-full h-full overflow-hidden bg-zinc-900"
-              style={{ borderRadius: 16 }}
+              style={{
+                borderRadius: 16,
+                willChange: "transform, borderRadius",
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+              }}
             >
               {children}
             </div>

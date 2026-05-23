@@ -7,9 +7,7 @@ import { Spotlight } from "@/components/ui/spotlight";
 
 export function SplineSceneBasic() {
   const cardRef = useRef<HTMLDivElement>(null);
-  // One-shot: stays true once the section enters view, so the fresh entrance
-  // (Spline boot + spotlight sweep) plays the moment the user scrolls here.
-  const [armed, setArmed] = useState(false);
+  const [spotlightArmed, setSpotlightArmed] = useState(false);
 
   useEffect(() => {
     if (!cardRef.current) return;
@@ -18,7 +16,7 @@ export function SplineSceneBasic() {
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
-            setArmed(true);
+            setSpotlightArmed(true);
             io.disconnect();
             break;
           }
@@ -32,7 +30,7 @@ export function SplineSceneBasic() {
 
   return (
     <Card ref={cardRef} className="w-full h-full rounded-none border-0 bg-black/[0.96] relative overflow-hidden">
-      {armed && (
+      {spotlightArmed && (
         <Spotlight
           key="spotlight-armed"
           className="-top-40 left-0 md:left-60 md:-top-20"
@@ -56,14 +54,10 @@ Scroll down. See for yourself.
         </div>
 
         <div className="flex-1 relative pointer-events-auto">
-          {armed ? (
-            <SplineScene
-              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="w-full h-full"
-            />
-          ) : (
-            <div className="w-full h-full" aria-hidden />
-          )}
+          <SplineScene
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="w-full h-full"
+          />
         </div>
       </div>
     </Card>

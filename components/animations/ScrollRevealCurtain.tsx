@@ -20,6 +20,7 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
   label,
   scrollDistance = "+=220%",
 }) => {
+  const sectionVh = 100 + (parseInt(scrollDistance.replace(/[^0-9]/g, ""), 10) || 220);
   const sectionRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const beneathRef = useRef<HTMLDivElement>(null);
@@ -63,43 +64,46 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
           trigger: sectionRef.current,
           start: "top top",
           end: scrollDistance,
-          scrub: 1.4,
+          scrub: 0.4,
           pin: stageRef.current,
           pinSpacing: true,
           anticipatePin: 1,
         },
       });
 
-      // Phase 1 (0 → 0.5): hold still — let the spline robot play its entrance
-      tl.to({}, { duration: 0.5 }, 0);
+      // Brief beat (0 → 0.05): one moment to register the Spline scene
+      tl.to({}, { duration: 0.05 }, 0);
 
-      // Phase 2 (0.5 → 1.0): smooth vertical curtain rise + gentle depth fade beneath
+      // Phase 2 (0.05 → 0.8): smooth vertical curtain rise + gentle depth fade
       tl.to(
         beneathRef.current,
         {
           scale: 0.92,
           filter: "brightness(0.5) blur(3px)",
-          duration: 0.5,
+          duration: 0.75,
           ease: "sine.inOut",
         },
-        0.5
+        0.05
       );
 
       tl.to(
         curtainRef.current,
         {
           yPercent: 0,
-          duration: 0.5,
+          duration: 0.75,
           ease: "power2.inOut",
         },
-        0.5
+        0.05
       );
 
       tl.to(
         labelRef.current,
-        { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "power2.out" },
-        0.7
+        { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power2.out" },
+        0.55
       );
+
+      // Small breathing hold at the end so the next section snaps in (0.95 → 1.0)
+      tl.to({}, { duration: 0.05 }, 0.95);
     }, sectionRef);
 
     return () => ctx.revert();
@@ -109,7 +113,7 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "460vh" }}
+      style={{ height: `${sectionVh}vh` }}
       aria-label="Scroll transition"
     >
       <div

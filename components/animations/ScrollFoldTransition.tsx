@@ -25,6 +25,7 @@ export const ScrollFoldTransition: React.FC<Props> = ({
   bottomColor = "#1a1a1a",
   scrollDistance = "+=280%",
 }) => {
+  const sectionVh = 100 + (parseInt(scrollDistance.replace(/[^0-9]/g, ""), 10) || 280);
   const sectionRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
@@ -79,7 +80,7 @@ export const ScrollFoldTransition: React.FC<Props> = ({
           trigger: sectionRef.current,
           start: "top top",
           end: scrollDistance,
-          scrub: 1.2,
+          scrub: 0.4,
           pin: stageRef.current,
           pinSpacing: true,
           anticipatePin: 1,
@@ -179,7 +180,7 @@ export const ScrollFoldTransition: React.FC<Props> = ({
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "360vh" }}
+      style={{ height: `${sectionVh}vh` }}
       aria-label="Page fold transition"
     >
       <div

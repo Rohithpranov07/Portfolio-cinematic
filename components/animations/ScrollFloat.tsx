@@ -12,6 +12,7 @@ interface ScrollFloatProps {
   textClassName?: string;
   stagger?: number;
   scrollRange?: [number, number];
+  style?: React.CSSProperties;
 }
 
 const Char = ({
@@ -45,7 +46,8 @@ const ScrollFloat = ({
   containerClassName = '',
   textClassName = '',
   stagger = 0.6,
-  scrollRange = [0, 1]
+  scrollRange = [0, 1],
+  style
 }: ScrollFloatProps) => {
   const containerRef = useRef<HTMLSpanElement>(null);
   const containerScroll = useContainerScroll();
@@ -78,7 +80,7 @@ const ScrollFloat = ({
   }, [chars, stagger]);
 
   return (
-    <span ref={containerRef} className={`scroll-float ${containerClassName}`}>
+    <span ref={containerRef} className={`scroll-float ${containerClassName}`} style={style}>
       <span className={`scroll-float-text ${textClassName}`}>
         {chars.map((char, i) => (
           <Char

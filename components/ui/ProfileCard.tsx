@@ -259,7 +259,8 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     if (!enableTilt || !tiltEngine) return;
 
     const shell = shellRef.current;
-    if (!shell) return;
+    const wrap = wrapRef.current;
+    if (!shell || !wrap) return;
 
     const pointerMoveHandler = handlePointerMove;
     const pointerEnterHandler = handlePointerEnter;
@@ -289,13 +290,34 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     };
     shell.addEventListener('click', handleClick);
 
-    const initialX = (shell.clientWidth || 0) - ANIMATION_CONFIG.INITIAL_X_OFFSET;
-    const initialY = ANIMATION_CONFIG.INITIAL_Y_OFFSET;
-    tiltEngine.setImmediate(initialX, initialY);
-    tiltEngine.toCenter();
-    tiltEngine.beginInitial(ANIMATION_CONFIG.INITIAL_DURATION);
+    // Defer tilt initial animation + CSS animations until card is in viewport
+    let initialStarted = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            wrap.classList.add('in-view');
+            if (!initialStarted) {
+              initialStarted = true;
+              const initialX = (shell.clientWidth || 0) - ANIMATION_CONFIG.INITIAL_X_OFFSET;
+              const initialY = ANIMATION_CONFIG.INITIAL_Y_OFFSET;
+              tiltEngine.setImmediate(initialX, initialY);
+              tiltEngine.toCenter();
+              tiltEngine.beginInitial(ANIMATION_CONFIG.INITIAL_DURATION);
+            }
+          } else {
+            wrap.classList.remove('in-view');
+            tiltEngine.cancel();
+            initialStarted = false;
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(wrap);
 
     return () => {
+      observer.disconnect();
       shell.removeEventListener('pointerenter', pointerEnterHandler as EventListener);
       shell.removeEventListener('pointermove', pointerMoveHandler as EventListener);
       shell.removeEventListener('pointerleave', pointerLeaveHandler as EventListener);

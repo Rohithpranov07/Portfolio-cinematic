@@ -22,6 +22,7 @@ export const ScrollWarpPortal: React.FC<Props> = ({
   accent = "#c8a882",
   scrollDistance = "+=260%",
 }) => {
+  const sectionVh = 100 + (parseInt(scrollDistance.replace(/[^0-9]/g, ""), 10) || 260);
   const sectionRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const vignetteRef = useRef<HTMLDivElement>(null);
@@ -86,7 +87,7 @@ export const ScrollWarpPortal: React.FC<Props> = ({
           trigger: sectionRef.current,
           start: "top top",
           end: scrollDistance,
-          scrub: 2.2,
+          scrub: 0.5,
           pin: stageRef.current,
           pinSpacing: true,
           anticipatePin: 1,
@@ -239,7 +240,7 @@ export const ScrollWarpPortal: React.FC<Props> = ({
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "340vh" }}
+      style={{ height: `${sectionVh}vh` }}
       aria-label="Warp transition"
     >
       <div

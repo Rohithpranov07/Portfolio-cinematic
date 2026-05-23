@@ -8,21 +8,21 @@ import {
   useReducedMotion,
   cubicBezier,
 } from "framer-motion";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react"; // useEffect+useState used by ScrollTiltedGrid loop sentinel
 
 export const DEFAULT_GRID_IMAGES: readonly string[] = [
-  "/Design_img/Ben-10.png",
-  "/Design_img/Boundary-1.png",
-  "/Design_img/Designathon-1.png",
-  "/Design_img/Echo-1.png",
-  "/Design_img/Emotion.png",
+  "/Design_img/Ben-10.avif",
+  "/Design_img/Boundary-1.avif",
+  "/Design_img/Designathon-1.avif",
+  "/Design_img/Echo-1.avif",
+  "/Design_img/Emotion.avif",
   "/Design_img/Kodairatedesign-1.jpg",
-  "/Design_img/Mediation-1.png",
-  "/Design_img/Pablo.png",
-  "/Design_img/Ridershield-1.jpeg",
-  "/Design_img/Shopsmart-1.png",
-  "/Design_img/Sony.png",
-  "/Design_img/ev-1.png",
+  "/Design_img/Mediation-1.avif",
+  "/Design_img/Pablo.avif",
+  "/Design_img/Ridershield-1.avif",
+  "/Design_img/Shopsmart-1.avif",
+  "/Design_img/Sony.avif",
+  "/Design_img/ev-1.avif",
 ];
 
 const CONTAIN_KEYS = ["Boundary", "Kodairatedesign", "Mediation", "Ridershield", "ev-", "Shopsmart", "Ben-10", "Sony", "Emotion", "Pablo"];
@@ -35,35 +35,8 @@ const focusEase: [typeof easeIntoFocus, typeof easeOutOfFocus] = [
   easeOutOfFocus,
 ];
 
-export type MaxWidthToken =
-  | "sm"
-  | "md"
-  | "lg"
-  | "xl"
-  | "2xl"
-  | "3xl"
-  | "none";
-
 export type GapToken = 4 | 6 | 8 | 10 | 12 | 14;
 
-const MAX_WIDTH_CLASS: Record<MaxWidthToken, string> = {
-  sm: "max-w-sm",
-  md: "max-w-md",
-  lg: "max-w-lg",
-  xl: "max-w-xl",
-  "2xl": "max-w-2xl",
-  "3xl": "max-w-3xl",
-  none: "",
-};
-
-const GAP_CLASS: Record<GapToken, string> = {
-  4: "gap-4",
-  6: "gap-6",
-  8: "gap-8",
-  10: "gap-10",
-  12: "gap-12",
-  14: "gap-14",
-};
 
 // Deterministic hash so server/client positions match (no hydration drift)
 function seeded(i: number) {
@@ -115,6 +88,7 @@ function Starfield() {
         pointerEvents: "none",
         overflow: "hidden",
         zIndex: 0,
+        contain: "layout style",
       }}
     >
       {STARFIELD.map((s, i) =>
@@ -168,7 +142,7 @@ function Starfield() {
           animation-name: stg-twinkle;
           animation-iteration-count: infinite;
           animation-timing-function: ease-in-out;
-          will-change: opacity, transform;
+          will-change: opacity;
         }
         @media (prefers-reduced-motion: reduce) {
           .stg-star-twinkle { animation: none; opacity: 0.5; }
@@ -226,6 +200,7 @@ function Tile({
 
   const topAlign = isContain(src);
   const bgPosition = topAlign ? "center top" : "center";
+  const bgImage = `url("${src}")`;
 
   if (reduce) {
     return (
@@ -236,7 +211,7 @@ function Tile({
         >
           <div
             className="absolute inset-0 bg-cover bg-no-repeat"
-            style={{ backgroundImage: `url("${src}")`, backgroundPosition: bgPosition }}
+            style={{ backgroundImage: bgImage, backgroundPosition: bgPosition }}
           />
         </div>
       </figure>
@@ -266,7 +241,7 @@ function Tile({
         <motion.div
           className="absolute inset-0 bg-cover bg-no-repeat will-change-transform"
           style={{
-            backgroundImage: `url("${src}")`,
+            backgroundImage: bgImage,
             backgroundPosition: bgPosition,
             scaleY: innerSY,
             backfaceVisibility: "hidden",
@@ -282,7 +257,6 @@ export type ScrollTiltedGridProps = {
   loop?: boolean;
   initialCycles?: number;
   aspectRatio?: string;
-  maxWidth?: MaxWidthToken;
   gap?: GapToken;
   perspective?: number;
   maxTilt?: number;
@@ -296,7 +270,6 @@ export function ScrollTiltedGrid({
   loop = false,
   initialCycles = 3,
   aspectRatio = "3/4",
-  maxWidth = "lg",
   gap = 10,
   perspective = 900,
   maxTilt = 70,
@@ -349,9 +322,10 @@ export function ScrollTiltedGrid({
         position: "relative",
         width: "100%",
         boxSizing: "border-box",
-        paddingBlock: "20vh",
+        paddingBlockStart: "20vh",
+        paddingBlockEnd: "6vh",
         marginTop: "20vh",
-        marginBottom: "10vh",
+        marginBottom: 0,
       }}
     >
       <Starfield />

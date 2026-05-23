@@ -271,7 +271,22 @@ not around the trend.
         `}</style>
       </section>
 
-      <ScrollTiltedGrid initialCycles={2} maxWidth="xl" gap={10} />
+      <ScrollTiltedGrid initialCycles={1} gap={10} />
+
+      {/* Fade the starfield section smoothly into the card carousel below */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "22vh",
+          background: "linear-gradient(to bottom, transparent 0%, #060606 100%)",
+          pointerEvents: "none",
+          zIndex: 10,
+        }}
+      />
     </div>
   );
 }

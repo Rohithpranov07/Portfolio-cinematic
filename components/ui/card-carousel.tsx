@@ -145,6 +145,7 @@ with purpose, precision, and personality.
                 autoplay={{
                   delay: autoplayDelay,
                   disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
                 }}
                 effect={"coverflow"}
                 grabCursor={true}

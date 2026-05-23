@@ -21,9 +21,17 @@ export default function Home() {
     <main className="relative">
       <FrameToFullscreen
         titleComponent={
-          <h1 className="text-4xl md:text-5xl font-semibold text-white">
+          <h1 className="text-4xl md:text-5xl font-semibold text-white mt-[4vh]">
             Crafting digital experiences that <br />
-            <ScrollFloat stagger={0.8} textClassName="text-white" scrollRange={[0.05, 0.48]}>
+            <ScrollFloat
+              stagger={0.8}
+              textClassName="text-white font-bold tracking-tight inline-block"
+              style={{
+                fontSize: "clamp(4.5rem, 10vw, 9.5rem)",
+                marginTop: "3rem"
+              }}
+              scrollRange={[0.05, 0.48]}
+            >
               Come Alive
             </ScrollFloat>
           </h1>
@@ -34,7 +42,7 @@ export default function Home() {
 
       <ScrollRevealCurtain
         curtainColor="#fd5200"
-        scrollDistance="+=360%"
+        scrollDistance="+=120%"
         label={
           <div className="flex flex-col items-center gap-4">
             <span className="text-xs font-bold uppercase tracking-[0.3em] opacity-80">
@@ -62,7 +70,7 @@ export default function Home() {
         <ScrollWarpPortal
           voidColor="#050505"
           accent="#c8a882"
-          scrollDistance="+=260%"
+          scrollDistance="+=170%"
           label={
             <div className="flex flex-col items-center gap-4">
               <span className="text-xs font-bold uppercase tracking-[0.4em] opacity-70">
@@ -90,7 +98,7 @@ export default function Home() {
         voidColor="#050505"
         topColor="#0f0f0f"
         bottomColor="#1a1a1a"
-        scrollDistance="+=280%"
+        scrollDistance="+=180%"
         label={
           <div className="flex flex-col items-center gap-4">
             <span className="text-xs font-bold uppercase tracking-[0.4em] opacity-70">
@@ -157,8 +165,8 @@ export default function Home() {
             handle="rohithpranov"
             status="Online"
             contactText="Contact Me"
-            avatarUrl="/profilecard.png"
-            miniAvatarUrl="/profilecard.png"
+            avatarUrl="/profilecard.avif"
+            miniAvatarUrl="/profilecard.avif"
             iconUrl="/iconpattern.png"
             grainUrl="/grain.webp"
             showUserInfo

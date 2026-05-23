@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
 import { LampDemo } from "@/components/ui/lamp";
 import { ProjectShowcase } from "@/components/ui/project-showcase";
@@ -63,7 +62,10 @@ export default function ZoomParallaxDemo() {
         portalIndex={0}
         portalContent={<LampDemo />}
       />
-      <ScrollExpand>
+      <ScrollExpand
+        stageBackground="radial-gradient(ellipse 100% 80% at 50% 50%, rgba(99,102,241,0.12) 0%, rgba(139,92,246,0.07) 28%, #08080f 58%, #050508 100%)"
+        background="#080808"
+      >
         <ProjectShowcase />
       </ScrollExpand>
 

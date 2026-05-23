@@ -71,7 +71,7 @@ const CardCarouselDemo = () => {
     <div className="w-full">
       <CardCarousel
         images={images}
-        autoplayDelay={2000}
+        autoplayDelay={3500}
         showPagination={true}
         showNavigation={true}
       />
