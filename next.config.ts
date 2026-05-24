@@ -30,6 +30,44 @@ const nextConfig: NextConfig = {
       "lenis",
     ],
   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Group fragmented vendor node_modules into unified chunks to make fewer HTTP requests
+      config.optimization.splitChunks = {
+        ...config.optimization.splitChunks,
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          // Group key framework modules
+          frameworks: {
+            name: "frameworks",
+            chunks: "all",
+            test: /[\\/]node_modules[\\/](react|react-dom|next|scheduler)[\\/]/,
+            priority: 40,
+            enforce: true,
+          },
+          // Aggregate heavy UI and animation libraries into a single chunk
+          libs: {
+            test: /[\\/]node_modules[\\/](gsap|framer-motion|lenis|swiper|ogl|lucide-react)[\\/]/,
+            name: "libs",
+            chunks: "all",
+            priority: 30,
+            enforce: true,
+          },
+          // Shared modules
+          commons: {
+            name: "commons",
+            chunks: "all",
+            minChunks: 2,
+            priority: 20,
+            reuseExistingChunk: true,
+          },
+        },
+      };
+    }
+    return config;
+  },
+  turbopack: {},
   async headers() {
     const longCache = "public, max-age=31536000, immutable";
     return [

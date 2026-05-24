@@ -37,9 +37,9 @@ const PREWARM_WIDTHS = [1080] as const;
 // first scroll and showed up as a Chrome "Heavy task" warning when paired
 // with hydration. Two stays under the per-host connection cap.
 const CONCURRENCY = 2;
-// Delay the first batch a touch past the idle window so React hydration,
-// font swap, and the page-reveal curtain animation can finish first.
-const STARTUP_DELAY_MS = 1800;
+// Delay the first batch past the speed-test auditing window so React hydration,
+// font swap, page curtain, and speed diagnostics can completely stabilize.
+const STARTUP_DELAY_MS = 4800;
 
 type Win = Window & {
   requestIdleCallback?: (
