@@ -27,6 +27,7 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
   const curtainRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
   const shardRef = useRef<HTMLDivElement>(null);
+  const dimRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     if (!sectionRef.current || !curtainRef.current) return;
@@ -39,7 +40,10 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
         scale: 1,
         rotateX: 0,
         z: 0,
-        filter: "brightness(1) blur(0px)",
+      });
+
+      gsap.set(dimRef.current, {
+        opacity: 0,
       });
 
       // Vertical wipe instead of a diagonal clip-path sweep — feels far more natural.
@@ -79,7 +83,16 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
         beneathRef.current,
         {
           scale: 0.92,
-          filter: "brightness(0.5) blur(3px)",
+          duration: 0.75,
+          ease: "sine.inOut",
+        },
+        0.05
+      );
+
+      tl.to(
+        dimRef.current,
+        {
+          opacity: 0.65,
           duration: 0.75,
           ease: "sine.inOut",
         },
@@ -127,9 +140,16 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
           {beneath}
         </div>
 
+        {/* Dynamic overlay to dim the scene smoothly on scroll without layout-triggering blur filters */}
+        <div
+          ref={dimRef}
+          className="pointer-events-none absolute inset-0 w-full h-full bg-black z-[2]"
+          style={{ opacity: 0 }}
+        />
+
         <div
           ref={shardRef}
-          className="pointer-events-none absolute inset-0 w-full h-full will-change-transform"
+          className="pointer-events-none absolute inset-0 w-full h-full will-change-transform z-[3]"
           style={{
             background: `linear-gradient(135deg, ${curtainColor} 0%, #000 100%)`,
             mixBlendMode: "screen",
@@ -138,7 +158,7 @@ export const ScrollRevealCurtain: React.FC<Props> = ({
 
         <div
           ref={curtainRef}
-          className="pointer-events-none absolute inset-0 w-full h-full will-change-transform flex items-center justify-center"
+          className="pointer-events-none absolute inset-0 w-full h-full will-change-transform flex items-center justify-center z-[4]"
           style={{ backgroundColor: curtainColor }}
         >
           <div

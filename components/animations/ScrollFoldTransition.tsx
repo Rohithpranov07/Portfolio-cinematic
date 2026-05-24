@@ -61,7 +61,6 @@ export const ScrollFoldTransition: React.FC<Props> = ({
         opacity: 0,
         y: 60,
         scale: 0.85,
-        filter: "blur(12px)",
       });
 
       const lineEls = linesRef.current
@@ -132,7 +131,6 @@ export const ScrollFoldTransition: React.FC<Props> = ({
           opacity: 1,
           y: 0,
           scale: 1,
-          filter: "blur(0px)",
           duration: 0.45,
         },
         0.4
@@ -141,13 +139,13 @@ export const ScrollFoldTransition: React.FC<Props> = ({
       // 6. Hold a beat
       tl.to({}, { duration: 0.1 }, 0.85);
 
-      // 7. Label rises out of the way
+      // 7. Label rises out of the way (with dynamic scale zoom)
       tl.to(
         labelRef.current,
         {
           y: -120,
+          scale: 1.12,
           opacity: 0,
-          filter: "blur(8px)",
           duration: 0.25,
         },
         0.95

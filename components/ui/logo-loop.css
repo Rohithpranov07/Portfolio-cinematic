@@ -174,9 +174,43 @@
   );
 }
 
+.logoloop__track--animate {
+  animation-name: marquee-horizontal;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: var(--marquee-duration, 15s);
+}
+
+.logoloop--vertical .logoloop__track--animate {
+  animation-name: marquee-vertical;
+}
+
+.logoloop__track--paused {
+  animation-play-state: paused !important;
+}
+
+@keyframes marquee-horizontal {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: var(--marquee-translate);
+  }
+}
+
+@keyframes marquee-vertical {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: var(--marquee-translate);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .logoloop__track {
     transform: translate3d(0, 0, 0) !important;
+    animation: none !important;
   }
   .logoloop__item img,
   .logoloop__node {

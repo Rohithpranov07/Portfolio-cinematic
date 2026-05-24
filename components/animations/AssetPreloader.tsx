@@ -9,60 +9,14 @@ import { useEffect } from "react";
  * fills in the same order the user will encounter the assets.
  */
 const RAW_IMAGE_PATHS = [
-  // VSCode portfolio + hero parallax + scroll-morph project thumbnails
+  // VSCode portfolio top card assets
   "/KodairateIQ.avif",
   "/Proofstack-1.avif",
-  "/cybershield-1.avif",
-  "/oldportfolio-1.avif",
-  "/Ridershield-1.avif",
-  "/Quizwebsite-1.avif",
-  "/Ridershieldplan-1.avif",
-  "/Cinematch-1.avif",
-  "/weatherapp-1.avif",
-  "/safetydashboard-1.avif",
-  "/sentinal-1.avif",
-  "/Sentryx-1.avif",
 
-  // Profile card (large — worth preloading even though it's a <img>)
+  // Profile card backgrounds
   "/profilecard.avif",
   "/iconpattern.png",
   "/grain.webp",
-
-  // Scroll-tilted-grid (rendered via CSS background-image url(), so raw URL warm-up actually helps)
-  "/Design_img/Ben-10.avif",
-  "/Design_img/Boundary-1.avif",
-  "/Design_img/Designathon-1.avif",
-  "/Design_img/Echo-1.avif",
-  "/Design_img/Emotion.avif",
-  "/Design_img/Kodairatedesign-1.jpg",
-  "/Design_img/Mediation-1.avif",
-  "/Design_img/Pablo.avif",
-  "/Design_img/Ridershield-1.avif",
-  "/Design_img/Shopsmart-1.avif",
-  "/Design_img/Sony.avif",
-  "/Design_img/ev-1.avif",
-
-  // Zoom-parallax (loaded through plain <img> wrapped by NextImage now)
-  "/Design_zoomparallax/Ben10-zoomparallax.png",
-  "/Design_zoomparallax/Desinathon-zoomparallax.png",
-  "/Design_zoomparallax/Echo-zoomparallax.png",
-  "/Design_zoomparallax/Pablo-zoomparallax.png",
-  "/Design_zoomparallax/Shopsmart-zoomparallax.png",
-  "/Design_zoomparallax/Sonywalkman-zoomparallax.png",
-
-  // Design carousel
-  "/design_carosoul/Boundary-1.jpg",
-  "/design_carosoul/Designathon-1.jpg",
-  "/design_carosoul/Echo-1.PNG",
-  "/design_carosoul/Emotion 2.PNG",
-  "/design_carosoul/Kodairatedesign-1.jpg",
-  "/design_carosoul/Mediation-1.jpg",
-  "/design_carosoul/Pablo 2.PNG",
-  "/design_carosoul/Ridershield-1.jpg",
-  "/design_carosoul/Shopsmart-zoomparallax.png",
-  "/design_carosoul/Sony.jpg",
-  "/design_carosoul/ev-1.jpg",
-  "/design_carosoul/Ben-10 2.PNG",
 ];
 
 /**
@@ -74,16 +28,6 @@ const RAW_IMAGE_PATHS = [
 const NEXT_IMAGE_PATHS = [
   "/KodairateIQ.avif",
   "/Proofstack-1.avif",
-  "/cybershield-1.avif",
-  "/oldportfolio-1.avif",
-  "/Ridershield-1.avif",
-  "/Quizwebsite-1.avif",
-  "/Ridershieldplan-1.avif",
-  "/Cinematch-1.avif",
-  "/weatherapp-1.avif",
-  "/safetydashboard-1.avif",
-  "/sentinal-1.avif",
-  "/Sentryx-1.avif",
 ];
 
 // One width covers most of the page (cards live at ~600-820px); a second

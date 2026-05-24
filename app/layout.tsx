@@ -53,6 +53,14 @@ export default function RootLayout({
       className={`${cormorant.variable} ${dmSans.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <link
+          rel="preload"
+          href="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+          as="fetch"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
         className="bg-[#080808] text-[#f0ece4] antialiased overflow-x-hidden"
         suppressHydrationWarning

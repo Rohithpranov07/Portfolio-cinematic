@@ -115,62 +115,6 @@ const useImageLoader = (
   }, dependencies);
 };
 
-const useAnimationLoop = (
-  trackRef: React.RefObject<HTMLDivElement | null>,
-  targetVelocity: number,
-  seqWidth: number,
-  seqHeight: number,
-  isHovered: boolean,
-  hoverSpeed: number | undefined,
-  isVertical: boolean
-) => {
-  const rafRef = useRef<number | null>(null);
-  const lastTimestampRef = useRef<number | null>(null);
-  const offsetRef = useRef(0);
-  const velocityRef = useRef(0);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    const seqSize = isVertical ? seqHeight : seqWidth;
-
-    if (seqSize > 0) {
-      offsetRef.current = ((offsetRef.current % seqSize) + seqSize) % seqSize;
-      track.style.transform = isVertical
-        ? `translate3d(0, ${-offsetRef.current}px, 0)`
-        : `translate3d(${-offsetRef.current}px, 0, 0)`;
-    }
-
-    const animate = (timestamp: number) => {
-      if (lastTimestampRef.current === null) lastTimestampRef.current = timestamp;
-      const deltaTime = Math.max(0, timestamp - lastTimestampRef.current) / 1000;
-      lastTimestampRef.current = timestamp;
-      const target = isHovered && hoverSpeed !== undefined ? hoverSpeed : targetVelocity;
-      const easingFactor = 1 - Math.exp(-deltaTime / ANIMATION_CONFIG.SMOOTH_TAU);
-      velocityRef.current += (target - velocityRef.current) * easingFactor;
-
-      if (seqSize > 0) {
-        let nextOffset = offsetRef.current + velocityRef.current * deltaTime;
-        nextOffset = ((nextOffset % seqSize) + seqSize) % seqSize;
-        offsetRef.current = nextOffset;
-        track.style.transform = isVertical
-          ? `translate3d(0, ${-offsetRef.current}px, 0)`
-          : `translate3d(${-offsetRef.current}px, 0, 0)`;
-      }
-      rafRef.current = requestAnimationFrame(animate);
-    };
-
-    rafRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
-        rafRef.current = null;
-      }
-      lastTimestampRef.current = null;
-    };
-  }, [targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical, trackRef]);
-};
-
 export const LogoLoop = memo(function LogoLoop({
   logos,
   speed = 120,
@@ -205,15 +149,6 @@ export const LogoLoop = memo(function LogoLoop({
   }, [hoverSpeed, pauseOnHover]);
 
   const isVertical = direction === "up" || direction === "down";
-
-  const targetVelocity = useMemo(() => {
-    const magnitude = Math.abs(speed);
-    let dirMul: number;
-    if (isVertical) dirMul = direction === "up" ? 1 : -1;
-    else dirMul = direction === "left" ? 1 : -1;
-    const speedMul = speed < 0 ? -1 : 1;
-    return magnitude * dirMul * speedMul;
-  }, [speed, direction, isVertical]);
 
   const updateDimensions = useCallback(() => {
     const containerWidth = containerRef.current?.clientWidth ?? 0;
@@ -250,15 +185,6 @@ export const LogoLoop = memo(function LogoLoop({
     isVertical,
   ]);
   useImageLoader(seqRef, updateDimensions, [logos, gap, logoHeight, isVertical]);
-  useAnimationLoop(
-    trackRef,
-    targetVelocity,
-    seqWidth,
-    seqHeight,
-    isHovered,
-    effectiveHoverSpeed,
-    isVertical
-  );
 
   const cssVariables = useMemo<CSSProperties>(
     () =>
@@ -290,6 +216,32 @@ export const LogoLoop = memo(function LogoLoop({
   const handleMouseLeave = useCallback(() => {
     if (effectiveHoverSpeed !== undefined) setIsHovered(false);
   }, [effectiveHoverSpeed]);
+
+  const trackStyle = useMemo<CSSProperties>(
+    () => ({
+      "--marquee-translate": isVertical
+        ? `translate3d(0, ${direction === "up" ? -seqHeight : seqHeight}px, 0)`
+        : `translate3d(${direction === "left" ? -seqWidth : seqWidth}px, 0, 0)`,
+      "--marquee-duration": `${
+        speed !== 0 && (isVertical ? seqHeight : seqWidth) > 0
+          ? (isVertical ? seqHeight : seqWidth) / Math.abs(speed)
+          : 0
+      }s`,
+    }) as CSSProperties,
+    [seqWidth, seqHeight, isVertical, direction, speed]
+  );
+
+  const trackClassName = useMemo(
+    () =>
+      [
+        "logoloop__track",
+        (isVertical ? seqHeight : seqWidth) > 0 && "logoloop__track--animate",
+        isHovered && "logoloop__track--paused",
+      ]
+        .filter(Boolean)
+        .join(" "),
+    [isVertical, seqWidth, seqHeight, isHovered]
+  );
 
   const renderLogoItem = useCallback(
     (item: LogoItem, key: React.Key) => {
@@ -384,7 +336,8 @@ export const LogoLoop = memo(function LogoLoop({
       aria-label={ariaLabel}
     >
       <div
-        className="logoloop__track"
+        className={trackClassName}
+        style={trackStyle}
         ref={trackRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
